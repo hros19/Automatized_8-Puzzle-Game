@@ -16,4 +16,4 @@ En esta actividad se debe utilizar backtracking y la estrategia de búsqueda heu
 ![Game example](https://imgs.search.brave.com/5hMI_O43n1SxdFP4fnM9SwlvrRflNl9evvQLIYHnYq4/rs:fit:449:248:1/g:ce/aHR0cHM6Ly91c2Vy/LWltYWdlcy5naXRo/dWJ1c2VyY29udGVu/dC5jb20vMTEzMzg1/NzkvNTE1Mzg3NTct/YzRkOWFhODAtMWU1/YS0xMWU5LTk0MWYt/NDA4NjNkNzU5NjI1/LkpQRw)
 
 ## Autores
-![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=hros19)
+![Hansol's GitHub stats](https://github-readme-stats.vercel.app/api?username=hros19&theme=dark&show_icons=true)
