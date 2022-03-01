@@ -17,3 +17,4 @@ En esta actividad se debe utilizar backtracking y la estrategia de búsqueda heu
 
 ## Autores
 ![Hansol's GitHub stats](https://github-readme-stats.vercel.app/api?username=hros19&theme=dark&show_icons=true&count_private=true)
+![Josué's GitHub stats](https://github-readme-stats.vercel.app/api?username=jochaes&theme=dark&show_icons=true&count_private=true)
