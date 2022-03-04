@@ -4,7 +4,7 @@ Primer proyecto del curso de Análisis de Algoritmos del Instituto Tecnológico 
 ![](https://img.shields.io/badge/JavaScript-ED8B00?style=plastic&logo=javascript&logoColor=white) ![](https://img.shields.io/badge/-CSS3-blue?style=plastic&logo=css3&logoColor=white) ![](https://img.shields.io/badge/-HTML-red?style=plastic&logo=html5&logoColor=white)
 
 ## Objetivo Principal
-Implementar las estrategias de búsqueda heurística A* para la resolución del problema del puzzle-8.
+Implementar las estrategias de búsqueda heurística A* y Backtracking para la resolución del problema del puzzle-8.
 
 ## Descripción de la actividad
 Puzzle-8 es un juego de un único jugador que consiste en un tablero de 9 posiciones (puede ser dinámico), y ocho fichas numeradas del 1 al 8, situadas en el tablero, quedando una posición del tablero vacía.
@@ -18,3 +18,4 @@ En esta actividad se debe utilizar backtracking y la estrategia de búsqueda heu
 ## Autores
 ![Hansol's GitHub stats](https://github-readme-stats.vercel.app/api?username=hros19&theme=dark&show_icons=true&count_private=true)
 ![Josué's GitHub stats](https://github-readme-stats.vercel.app/api?username=jochaes&theme=dark&show_icons=true&count_private=true)
+![Benjamin's GitHub stats](https://github-readme-stats.vercel.app/api?username=JoshJohnson2001&theme=dark&show_icons=true&count_private=true)
