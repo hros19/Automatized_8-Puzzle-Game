@@ -49,6 +49,7 @@ class Juego {
     }
 
 
+
 }
 
 let juego = new Juego([
