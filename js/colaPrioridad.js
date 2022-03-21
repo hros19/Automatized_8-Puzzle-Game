@@ -1,146 +1,42 @@
-function colaPrio() {
-    this.cola = [];
-}
-
-colaPrio.prototype.swap = function(nodoDestino, nodoPartida) {
-    var nodoTemp = this.cola[nodoDestino];
-    this.cola[nodoDestino] = this.cola[nodoPartida];
-    this.cola[nodoPartida] = nodoTemp;
-    return nodoDestino;
-}
-
-colaPrio.prototype.insert = function(num) {
-    this.cola.push(num);
-    let indiceUltimo = (this.cola.length);
-    this.bubbleUp(indiceUltimo - 1);
-}
-
-/***
- * Se obtiene el menor (con mayor prioridad) de la cola
- * y se aplica el bubbleDown.
- */
-colaPrio.prototype.get = function() {
-    let num = this.cola[0];
-    console.log("len: ", this.cola.length);
-    if (this.cola.length == 0) {
-        return -1; // final de la cola
+class Nodo {
+    constructor (estado, peso) {
+      this.estado = estado;
+      this.peso = peso;
     }
-    if (this.cola.length == 1) {
-        let num = this.cola[0];
-        this.cola.pop();
-        return num;
+  }
+  
+  class ColaPrioridad {
+    constructor () {
+      this.elementos = [];
     }
-    this.cola[0] = this.cola.pop();
-    this.bubbleDown(0);
-    return num;
-}
-
-colaPrio.prototype.print = function() {
-    let i = 0;
-    console.log("ini -------------------------");
-    while (this.cola[i] !== undefined) {
-        console.log(this.cola[i]);
-        i++;
+  
+    estaVacia() {
+      return this.elementos.length === 0;
     }
-    console.log("fin------------------------------");
-}
-
-colaPrio.prototype.bubbleUp = function(indice) {
-    while (indice > 0) {
-        var nodoPadre = Math.floor((indice + 1) / 2) - 1;
-        if (this.cola[indice] < this.cola[nodoPadre]) {
-            // Si el actual es menor que el nodo padre
-            indice = this.swap(nodoPadre, indice);
-        } else {
-            indice = nodoPadre;
-        }
+  
+    print() {
+      console.log("Total: " + this.elementos.length);
+      for (let i in this.elementos) {
+        console.log("E: " + this.elementos[i].peso);
+      }
     }
-};
-
-colaPrio.prototype.bubbleDown = function(indice) {
-    let colaOrdenada = false;
-    let nodoHijo;
-    let nodoHermano;
-    let nodoPendiente;
-    while (!colaOrdenada) {
-        nodoHijo = (indice + 1) * 2;
-        nodoHermano = (nodoHijo - 1);
-        nodoPendiente = null; // El que vamos a intercambiar
-
-        if (this.cola[nodoHijo] < this.cola[indice]) {
-            // Tenemos que intercambiar al nodoHijo
-            nodoPendiente = nodoHijo;
-            indice = this.swap(nodoPendiente, indice);
-        }
-        if (this.cola[nodoHermano] < this.cola[indice] &&
-            (this.cola[nodoHijo] == null || (this.cola[nodoHermano] < this.cola[nodoHijo] && this.cola[nodoHijo] !== null))) {
-            // Intercambiamos al hermano
-            nodoPendiente = nodoHermano;
-            indice = this.swap(nodoPendiente, indice);
-        }
-        // Si no necesitamos hacer cambios
-        if (nodoPendiente == null) {
+  
+    insertar(nodo) {
+      if (this.estaVacia() || nodo.peso <= this.elementos[this.elementos.length - 1].peso) {
+        this.elementos.push(nodo);
+      } else {
+        for (let i in this.elementos) {
+          if (nodo.peso > this.elementos[i].peso) {
+            this.elementos.splice(i, 0, nodo);
             break;
+          }
         }
+      }
+      return this.size;
     }
-}
-
-colaPrio.prototype.swap = function(nodoDestino, nodoPartida) {
-    var nodoTemp = this.cola[nodoDestino];
-    this.cola[nodoDestino] = this.cola[nodoPartida];
-    this.cola[nodoPartida] = nodoTemp;
-    return nodoDestino;
-}
-
-var colaP = new colaPrio();
-
-colaP.insert(5);
-colaP.insert(4);
-colaP.insert(8);
-colaP.insert(6);
-colaP.insert(1);
-colaP.insert(14);
-colaP.insert(2);
-colaP.insert(7);
-
-/*
-colaP.print();
-console.log("Largoo =>>>>>>> ", colaP.cola.length);
-console.log("\n\n-------------------------");
-console.log(colaP.get());
-colaP.print();
-console.log("\n\n-------------------------");
-console.log(colaP.get());
-colaP.print();
-console.log("\n\n-------------------------");
-console.log(colaP.get());
-colaP.print();
-console.log("\n\n-------------------------");
-console.log(colaP.get());
-colaP.print();
-console.log("\n\n-------------------------");
-console.log(colaP.get());
-colaP.print();
-console.log("\n\n-------------------------");
-console.log(colaP.get());
-colaP.print();
-console.log("\n\n-------------------------");
-console.log(colaP.get());
-colaP.print();
-console.log("\n\n-------------------------");
-console.log(colaP.get());
-colaP.print();
-console.log("\n\n-------------------------");
-console.log(colaP.get());
-colaP.print();
-*/
-
-console.log(colaP.get());
-console.log(colaP.get());
-console.log(colaP.get());
-console.log(colaP.get());
-console.log(colaP.get());
-console.log(colaP.get());
-console.log(colaP.get());
-console.log(colaP.get());
-console.log(colaP.get());
+  
+    pop() {
+      if (this.estaVacia()) { return null; }
+      return this.elementos.pop();
+    }
+  }
