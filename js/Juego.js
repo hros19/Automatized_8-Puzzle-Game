@@ -1,3 +1,5 @@
+const { Nodo, ColaPrioridad } = requiere('./colaPrioridad.js');
+const matrizSolucion = [[1,2,3],[4,5,6],[7,8,0]];
 class Juego {
     /**
      * Constructor de la clase Juego.
@@ -59,7 +61,7 @@ class Juego {
 
     algoritmoAEstrella() {
 
-        var listaEstados = 0                           //Acá se inicializa la cola de prioridad 
+        var listaEstados = new ColaPrioridad();                           //Acá se inicializa la cola de prioridad 
         var camino = []                                //Camino que se debe recorrer para llegar a la solucion
 
         // estados.push( { puzzle: estado, distancia:0 } ) //Acá se ingresa el primer estado, o puzzle 
@@ -71,7 +73,7 @@ class Juego {
         while( estados.size() > 0){                              //Acá empieza el algoritmo, 
             // var estadoActual = listaEstados.pop().puzzle      //Acá devuelve el estado con menor f de la lista de estados 
 
-            if( estadoActual = matrizObjetivo ){ //Reviza si ya llegó a la matriz objetivo 
+            if( estadoActual = matrizSolucion ){ //Reviza si ya llegó a la matriz objetivo 
                 return camino
             }
 
