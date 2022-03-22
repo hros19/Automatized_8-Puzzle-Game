@@ -12,44 +12,8 @@ class Juego {
         this.ultimoEstado = null;
     }
 
-    intercambiarPiezas(pza1_x, pza1_y, pza2_x, pza2_y) {
-        let piezaTemporal = this.tablero[pza1_x, pza1_y];
-        this.tablero[pza1_x, pza1_y] = this.tablero[pza2_x, pza2_y];
-        this.tablero[pza2_x, pza2_y] = piezaTemporal;
-    }
+    
 
-    getMovimientoPieza(pieza) {
-        let pos = this.getPosPiezaBlanca();
-        let filaPzaBlanca = pos[0];
-        let colPzaBlanca = pos[1];
-    }
-
-    juegoTerminado() {
-        let cont = 0;
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                if (!this.tablero[i][j] == cont + 1) {
-                    break;
-                }
-                if (cont == 8) {
-                    return true;
-                }
-                cont++;
-            }
-        }
-        return false;
-    }
-
-
-    getPosPiezaBlanca() {
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                if (this.tablero[i][j] == 0) {
-                    return [i, j];
-                }
-            }
-        }
-    }
 
     //Todo: 
     //Definir que va a ser el objeto estado
@@ -70,7 +34,7 @@ class Juego {
                                                        // se ha movido la pieza vacia. 
 
 
-        while( estados.size() > 0){                              //Acá empieza el algoritmo, 
+        while( listaEstados.size() > 0){                              //Acá empieza el algoritmo, 
             // var estadoActual = listaEstados.pop().puzzle      //Acá devuelve el estado con menor f de la lista de estados 
 
             if( estadoActual = matrizSolucion ){ //Reviza si ya llegó a la matriz objetivo 
