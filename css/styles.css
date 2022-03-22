@@ -4,6 +4,12 @@ html {
     background: radial-gradient(ellipse at bottom, #1b2735, #090a0f 100%);
 }
 
+.tituloPruebaHayQueBorrarlo{
+    font-size: 24;
+    color: white;
+
+}
+
 .title {
     position: absolute;
     top: 10%;
