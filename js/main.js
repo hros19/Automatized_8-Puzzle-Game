@@ -64,7 +64,7 @@ matrizEjercicio1 = [
 ]
 
 //Muestra la matriz en pantalla, utilizando la tabla en el html 
-//matrix: matriz a imprimir
+//matrix: matriz a "imprimir"
 //documentTable: id de la tabla en el HTML
 setDocumentTable = (matrix, documentTable) => {
     var documentTable = document.getElementById(documentTable) //Busca el elemento tabla en el HTML
@@ -84,13 +84,12 @@ setDocumentTable = (matrix, documentTable) => {
 }
 
 setDocumentTable(matrizEjercicio1, 'table_Puzzle');
-
 setDocumentTable(matrizObjetivo, 'table_PuzzleSolucion');
 
 
-ejecutar = () => {
+ejecutarJuego = () => {
 
-  console.log("hola");
+  console.log("Ejecutando Juego desde el Main");  //Solo para probar que el juego funcione
 }
 
 /*
