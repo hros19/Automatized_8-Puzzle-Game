@@ -121,10 +121,33 @@ class Nodo {
         let posPiezaActual = this.obtenerPosPieza(pieza);
         let posPiezaBlanca = this.obtenerPosPiezaBlanca();
         if (this.obtenerPiezasMovibles().includes(pieza)) {
-            console.log(posPiezaActual);
-            console.log(posPiezaBlanca);
             this.intercambiarPiezas(posPiezaActual[0], posPiezaActual[1], posPiezaBlanca[0], posPiezaBlanca[1]);
         }
+    }
+
+    obtenerCopiaTablero() {
+        let res = [[0,0,0],[0,0,0],[0,0,0]];
+        for (let i in this.estado) {
+            for (let j in this.estado[0]) {
+                res[i][j] = this.estado[i][j];
+            }
+        }
+        return res;
+    }
+
+    obtenerHijos() {
+        let hijos = [];
+        let piezasMovibles = this.obtenerPiezasMovibles();
+        console.log(piezasMovibles);
+        for (let i in piezasMovibles) {
+            let posPiezaActual = this.obtenerPosPieza(piezasMovibles[i]);
+            let posPiezaBlanca = this.obtenerPosPiezaBlanca();
+            let nuevoHijo = new Nodo(this.obtenerCopiaTablero(), 0);
+            nuevoHijo.intercambiarPiezas(posPiezaActual[0], posPiezaActual[1], posPiezaBlanca[0], posPiezaBlanca[1]);
+            nuevoHijo.peso = nuevoHijo.calcularManhattan();
+            hijos.push(nuevoHijo);
+        }
+        return hijos;
     }
   
     // Borrar, no es necesario en produccion
@@ -249,6 +272,15 @@ class ColaPrioridad {
         if (this.estaVacia()) { return null; }
             return this.elementos.pop();
     }
+}
+
+let n = new Nodo([[1,2,3],[4,5,6],[7,8,0]], 2);
+
+n.mostrar()
+
+let x = n.obtenerHijos();
+for(let i in x) {
+    console.log(x[i]);
 }
 
 module.exports = { Nodo, ColaPrioridad };

@@ -1,4 +1,4 @@
-const { Nodo, ColaPrioridad } = requiere('./colaPrioridad.js');
+const { Nodo, ColaPrioridad } = require('./colaPrioridad.js');
 const matrizSolucion = [[1,2,3],[4,5,6],[7,8,0]];
 class Juego {
     /**
@@ -24,20 +24,29 @@ class Juego {
 
 
     algoritmoAEstrella() {
-
         var listaEstados = new ColaPrioridad();                           //Acá se inicializa la cola de prioridad 
-        var camino = []                                //Camino que se debe recorrer para llegar a la solucion
-
+        var camino = [];                                //Camino que se debe recorrer para llegar a la solucion
+    
+        let n = new Nodo(this.tablero, 0);
+        n.altura = camino.length;
+        if (n.esSolucion()) {
+            return camino;
+        }
+        
+        let hijos = n.obtenerHijos();
         // estados.push( { puzzle: estado, distancia:0 } ) //Acá se ingresa el primer estado, o puzzle 
                                                        // que es el la matriz que hay que resolver 
                                                        // Notese que la distancia es 0, ya que aún no 
                                                        // se ha movido la pieza vacia. 
 
-
-        while( listaEstados.size() > 0){                              //Acá empieza el algoritmo, 
-            // var estadoActual = listaEstados.pop().puzzle      //Acá devuelve el estado con menor f de la lista de estados 
-
-            if( estadoActual = matrizSolucion ){ //Reviza si ya llegó a la matriz objetivo 
+        /*
+        while( listaEstados.size() > 0){  
+            //Acá empieza el algoritmo, 
+            // var estadoActual = listaEstados.pop().puzzle      
+            //Acá devuelve el estado con menor f de la lista de estados 
+            
+            if( estadoActual = matrizSolucion ){ 
+                //Reviza si ya llegó a la matriz objetivo 
                 return camino
             }
 
@@ -50,11 +59,7 @@ class Juego {
                 console.log("hijo");
             })
             
-
-        }
-
-
-
+        }*/
     }
 
 
@@ -64,9 +69,7 @@ class Juego {
 let juego = new Juego([
     [1, 2, 3],
     [4, 5, 6],
-    [7, 8, 0]
+    [7, 0, 8]
 ]);
 
-let posiciones = juego.getPosPiezaBlanca();
-
-console.log(juego.juegoTerminado());
+juego.algoritmoAEstrella();
