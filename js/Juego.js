@@ -60,7 +60,9 @@ class Juego {
             //console.log("NA: ", n.estado);
             for (let i in hijos) {
                 if (hijos[i].esSolucion()) {
+                    hijos[i].peso = hijos[i].calcularManhattan() + this.camino.length + 1
                     this.camino.push(hijos[i]);
+                    console.log(cont);
                     return this.camino;
                 }
                 //console.log("HA: ", hijos[i].estado, this.existeEstado(hijos[i].estado),
