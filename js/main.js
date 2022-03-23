@@ -57,11 +57,31 @@ matrizObjetivo = [
   [7, 8, 0]
 ]
 
+
 matrizEjercicio1 = [
   [1, 2, 3],
   [0, 4, 6],
   [7, 5, 8]
 ]
+
+matrizVacia = [
+  [0, 0, 0],
+  [0, 0, 0],
+  [0, 0, 0]
+]
+
+setCellInfo = (htmlElement) => {
+  
+  console.log(htmlElement);
+  var input = document.createElement('input')
+  input.setAttribute('type','text')
+  input.value = htmlElement.innerHTML
+
+  htmlElement.innerHTML = ''
+  htmlElement.append(input)
+  htmlElement.firstElementChild.select()
+
+}
 
 //Muestra la matriz en pantalla, utilizando la tabla en el html 
 //matrix: matriz a "imprimir"
@@ -74,22 +94,74 @@ setDocumentTable = (matrix, documentTable) => {
 
         row.forEach(column => { //Por cada columna en la fila 
             var columnTable = document.createElement("td") //crea un elemento td
-            var columnText = document.createTextNode(column) //crea un nodo texto con la info de la columna
+            var columnText = document.createTextNode(column)
+
+            // const columnText = document.createElement("input");
+            // columnText.setAttribute('type', "text");
+            // columnText.setAttribute('value', column);
 
             columnTable.appendChild(columnText) //Append del texto al td 
+            //columnTable.onclick = function(){ setCellInfo(this)} EN FASE DE PRUEBA
+
             rowTable.appendChild(columnTable) //Apend del td al tr 
         });
         documentTable.appendChild(rowTable) // Append del rt al table
     });
 }
 
+
+
+setDocumentTableEditable = (tableName) => {
+
+  var tabla = document.getElementById(tableName)
+  var celdas = tabla.getElementsByTagName('td')
+
+  console.log(celdas);
+
+  for (let i = 0; i < celdas.length; i++) {
+
+    celdas[i].onClick = function() {alert('cliked')}
+
+    console.log(celdas[i]);
+    
+  }
+
+}
+
+
+
+
+// Función para tomar la info de la matriz del html y convertila en una lista
+// para iniciar el juego 
+// ver este video https://www.youtube.com/watch?v=uPBxzvSGIiA
+getMatrizDocument = (nombreTablaHTML) => {
+  var tableObj = document.getElementById( nombreTablaHTML );
+  var arr = [];
+  var allTRs = tableObj.getElementsByTagName( "tr" );
+  for ( var trCounter = 0; trCounter < allTRs.length; trCounter++ )
+  {
+    var tmpArr = [];
+    var allTDsInTR = allTRs[ trCounter ].getElementsByTagName( "td" );
+    for ( var tdCounter = 0; tdCounter < allTDsInTR.length; tdCounter++ )
+    {
+        console.log(allTDsInTR[ tdCounter ].innerHTML );   //Acá toma el valor del elemento
+        tmpArr.push( allTDsInTR[ tdCounter ].innerHTML );
+    }
+    arr.push( tmpArr );
+  }
+  console.log( arr );
+}
+
 setDocumentTable(matrizEjercicio1, 'table_Puzzle');
-setDocumentTable(matrizObjetivo, 'table_PuzzleSolucion');
+setDocumentTable(matrizVacia, 'table_PuzzleSolucion');
+
+//setDocumentTableEditable('table_Puzzle')
 
 
 ejecutarJuego = () => {
 
   console.log("Ejecutando Juego desde el Main");  //Solo para probar que el juego funcione
+  getMatrizDocument('table_Puzzle')
 }
 
 /*
