@@ -8,68 +8,103 @@ class Juego {
      */
     constructor(tablero) {
         this.tablero = tablero;
-        this.estados = [];
+        this.camino = [];
         this.ultimoEstado = null;
     }
 
-    
-
-
-    //Todo: 
-    //Definir que va a ser el objeto estado
-    //  Puede ser otra clase con las funciones de g y h
-    //Función para calcular los hijos de un estado 
-    //Función para calcular cuando ya se llegó al estado objetivo
-    
-
-
-    algoritmoAEstrella() {
-        var listaEstados = new ColaPrioridad();                           //Acá se inicializa la cola de prioridad 
-        var camino = [];                                //Camino que se debe recorrer para llegar a la solucion
-    
-        let n = new Nodo(this.tablero, 0);
-        n.altura = camino.length;
-        if (n.esSolucion()) {
-            return camino;
+    primeraFilaIgual(pFilaNueva) {
+        let filaActual = this.tablero[0];
+        if (filaActual.length != pFilaNueva.length) {
+            return false;
         }
         
-        let hijos = n.obtenerHijos();
-        // estados.push( { puzzle: estado, distancia:0 } ) //Acá se ingresa el primer estado, o puzzle 
-                                                       // que es el la matriz que hay que resolver 
-                                                       // Notese que la distancia es 0, ya que aún no 
-                                                       // se ha movido la pieza vacia. 
-
-        /*
-        while( listaEstados.size() > 0){  
-            //Acá empieza el algoritmo, 
-            // var estadoActual = listaEstados.pop().puzzle      
-            //Acá devuelve el estado con menor f de la lista de estados 
-            
-            if( estadoActual = matrizSolucion ){ 
-                //Reviza si ya llegó a la matriz objetivo 
-                return camino
+        for (let i in filaActual) {
+            if (filaActual[i] != pFilaNueva[i]) {
+                return false;
             }
+        }
+        return true;
+    }
 
-            var hijos = []; //Acá hay que calcular los estados hijos 
-                           // osea todos los movimientos posibles del estadoActual
-            
-            hijos.forEach(hijo => {                                //"Por cada hijo de la lista hijos"
-                // var f = calcularG(hijo) + calcularH(hijo)       // Se calcula g y h, acá H puede ser manhattan 
-                // listaEstados.push({puzzle: hijo, distancia: f}) //Se ingresan en la lista de estados 
-                console.log("hijo");
-            })
-            
-        }*/
+    compararMatrices(matriz1, matriz2) {
+        for(let i = 0; i < 3; i++) {
+            for(let j = 0; j < 3; j++) {
+                if (matriz1[i][j] != matriz2[i][j]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    existeEstado(estado) {
+        for (let i in this.camino) {
+            if (this.compararMatrices(this.camino[i].estado, estado)) {
+                return true;
+            }
+        }
+        return false;
+    } 
+
+    algoritmoAEstrella() {
+        let listaEstados = new ColaPrioridad();                           //Acá se inicializa la cola de prioridad                             //Camino que se debe recorrer para llegar a la solucion
+        let n = new Nodo(this.tablero, 0);
+        n.peso = n.calcularManhattan();
+        this.camino.push(n);
+        let raiz = n;
+        let cont = 0;
+        do {
+            cont++;
+            let hijos = n.obtenerHijos();
+            //console.log("~~~~~~~~~~~~~~~");
+            //console.log("NA: ", n.estado);
+            for (let i in hijos) {
+                if (hijos[i].esSolucion()) {
+                    this.camino.push(hijos[i]);
+                    return this.camino;
+                }
+                //console.log("HA: ", hijos[i].estado, this.existeEstado(hijos[i].estado),
+                //(this.primeraFilaIgual([1,2,3]) && this.primeraFilaIgual(hijos[i].estado[0])));
+                if (!this.existeEstado(hijos[i].estado) && 
+                    !(this.primeraFilaIgual([1,2,3]) && this.primeraFilaIgual(hijos[i].estado[0]))) {
+                    listaEstados.insertar(hijos[i]);
+                }
+            }
+            let hijoElegido = listaEstados.pop();
+            //console.log(">>>> ", hijoElegido);
+            if (hijoElegido == null) {
+                //console.log("final rama");
+                n = raiz;
+                continue;
+            } else {
+                hijoElegido.peso = hijoElegido.calcularManhattan() + this.camino.length;
+                this.camino.push(hijoElegido);
+                n = hijoElegido;
+            }
+        } while (true);
     }
 
 
 
 }
 
-let juego = new Juego([
+let juego1 = new Juego([
     [1, 2, 3],
-    [4, 5, 6],
-    [7, 0, 8]
+    [0, 4, 6],
+    [7, 5, 8]
 ]);
 
-juego.algoritmoAEstrella();
+//let res1 = juego1.algoritmoAEstrella();
+
+let juego2 = new Juego([
+    [3, 0, 7],
+    [4, 2, 1],
+    [5, 6, 8]
+]);
+//console.log(juego2.compararMatrices([[1,2,3],[4,5,6],[7,8,0]], [[1,2,3],[4,5,6],[7,8,9]]))
+
+let res2 = juego2.algoritmoAEstrella();
+
+for(let i in res2) {
+    console.log(res2[i]);
+}//*/

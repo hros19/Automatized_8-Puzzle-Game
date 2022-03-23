@@ -32,6 +32,21 @@ class Nodo {
         }
     }
 
+    estadosIguales(estado) {
+        for (let i in this.estado) {
+            for (let j in this.estado[0]) {
+                if ((this.estado)[i][j] != estado[i][j]) {
+                    return false;
+                } 
+            }
+        }
+        return true;
+    }
+
+    calcularPeso(altura) {
+        this.peso = altura + this.calcularManhattan();
+    }
+
     /**
      * Pregunta si el estado actual del nodo es la solucion.
      * @returns True, si es la solucion. False, caso contrario.
@@ -135,10 +150,18 @@ class Nodo {
         return res;
     }
 
+    primeraFilaResuelta() {
+        for (let i in this.estado) {
+            if (this.estado[0][i] != Number(i) + 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     obtenerHijos() {
         let hijos = [];
         let piezasMovibles = this.obtenerPiezasMovibles();
-        console.log(piezasMovibles);
         for (let i in piezasMovibles) {
             let posPiezaActual = this.obtenerPosPieza(piezasMovibles[i]);
             let posPiezaBlanca = this.obtenerPosPiezaBlanca();
@@ -274,13 +297,6 @@ class ColaPrioridad {
     }
 }
 
+
 let n = new Nodo([[1,2,3],[4,5,6],[7,8,0]], 2);
-
-n.mostrar()
-
-let x = n.obtenerHijos();
-for(let i in x) {
-    console.log(x[i]);
-}
-
 module.exports = { Nodo, ColaPrioridad };
