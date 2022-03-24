@@ -137,7 +137,7 @@ setDocumentTableEditable = (tableName) => {
 
 // Función para tomar la info de la matriz del html y convertila en una lista
 // para iniciar el juego 
-// ver este video https://www.youtube.com/watch?v=uPBxzvSGIiA
+
 getMatrizDocument = (nombreTablaHTML) => {
   var tableObj = document.getElementById( nombreTablaHTML );
   var arr = [];
@@ -148,12 +148,12 @@ getMatrizDocument = (nombreTablaHTML) => {
     var allTDsInTR = allTRs[ trCounter ].getElementsByTagName( "td" );
     for ( var tdCounter = 0; tdCounter < allTDsInTR.length; tdCounter++ )
     {
-        console.log(allTDsInTR[ tdCounter ].innerHTML );   //Acá toma el valor del elemento
+        //console.log(allTDsInTR[ tdCounter ].innerHTML );   //Acá toma el valor del elemento
         tmpArr.push( allTDsInTR[ tdCounter ].innerHTML );
     }
     arr.push( tmpArr );
   }
-  console.log( arr );
+  return(arr)
 }
 
 setDocumentTable(matrizEjercicio1, 'table_Puzzle');
@@ -164,8 +164,8 @@ setDocumentTable(matrizVacia, 'table_PuzzleSolucion');
 
 ejecutarJuego = () => {
 
-  console.log("Ejecutando Juego desde el Main");  //Solo para probar que el juego funcione
-  getMatrizDocument('table_Puzzle')
+  console.log("Ejecutando Juego desde el Main")  //Solo para probar que el juego funcione
+  console.log( getMatrizDocument('table_Puzzle') )
 }
 
 /*
