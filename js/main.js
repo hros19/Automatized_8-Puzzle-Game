@@ -70,9 +70,11 @@ matrizVacia = [
   [0, 0, 0]
 ]
 
+//Función que agrega un input a la celda de la tabla, para editar su contenido 
+//
 setCellInfo = (htmlElement) => {
   
-  console.log(htmlElement);
+  console.log(htmlElement.innerHTML);
   var input = document.createElement('input')
   input.setAttribute('type','text')
   input.value = htmlElement.innerHTML
@@ -80,6 +82,7 @@ setCellInfo = (htmlElement) => {
   htmlElement.innerHTML = ''
   htmlElement.append(input)
   htmlElement.firstElementChild.select()
+  
 
 }
 
@@ -101,7 +104,7 @@ setDocumentTable = (matrix, documentTable) => {
             // columnText.setAttribute('value', column);
 
             columnTable.appendChild(columnText) //Append del texto al td 
-            //columnTable.onclick = function(){ setCellInfo(this)} EN FASE DE PRUEBA
+            columnTable.onclick = function(){ setCellInfo(this)} //EN FASE DE PRUEBA, acá agrega la función a cada celda
 
             rowTable.appendChild(columnTable) //Apend del td al tr 
         });
@@ -110,7 +113,8 @@ setDocumentTable = (matrix, documentTable) => {
 }
 
 
-
+//Es para probar una cosa, pero no creo que funcione al final
+//Ya que pasé la funcionalidad, cuando se crea la tabla en la funcieon de setDocumentTable 
 setDocumentTableEditable = (tableName) => {
 
   var tabla = document.getElementById(tableName)
