@@ -44,7 +44,31 @@ class Juego {
             }
         }
         return false;
-    } 
+    }
+
+    deMatrizAFila(mat) {
+        let fila = [];
+        for (let i in mat) {
+            for (let j in mat[0]) {
+                fila.push(mat[i][j]);
+            }
+        }
+        return fila;
+    }
+
+    tieneSolucion(estado) {
+        const fila = this.deMatrizAFila(estado);
+        console.log(fila);
+        let cont = 0;
+        for (let i = 0; i < 8; i++) {
+            for (let j = i+1; j < 9; j++) {
+                if (fila[j] != 0 && fila[i] != 0 && (fila[i] > fila[j])) {
+                    cont++;
+                }
+            }
+        }
+        return cont % 2 == 0;
+    }
 
     algoritmoAEstrella() {
         let listaEstados = new ColaPrioridad();                           //Acá se inicializa la cola de prioridad                             //Camino que se debe recorrer para llegar a la solucion
@@ -90,28 +114,63 @@ class Juego {
             }
         } while (true);
     }
-
-
-
 }
 
+function imp(mat) {
+    for (let i in mat)
+        mat[i].mostrar();
+    console.log("\n\n\n\n\n\n\n\n\n\n\n\n");
+}
+
+// tiene solucion
 let juego1 = new Juego([
     [1, 2, 3],
     [0, 4, 6],
     [7, 5, 8]
 ]);
 
-//let res1 = juego1.algoritmoAEstrella();
-
+// tiene solucion
 let juego2 = new Juego([
-    [6, 8, 0],
-    [2, 1, 3],
-    [7, 4, 5]
+    [1, 8, 2],
+    [0, 4, 3],
+    [7, 6, 5]
 ]);
-//console.log(juego2.compararMatrices([[1,2,3],[4,5,6],[7,8,0]], [[1,2,3],[4,5,6],[7,8,9]]))
 
-let res2 = juego2.algoritmoAEstrella();
+// sin solucion
+let juego3 = new Juego([
+    [8, 1, 2],
+    [0, 4, 3],
+    [7, 6, 5]
+]);
 
-for(let i in res2) {
-    res2[i].mostrar();
-}//*/
+let juego4 = new Juego([
+    [2, 1, 3],
+    [4, 5, 6],
+    [7, 8, 0]
+]);
+
+
+if (juego1.tieneSolucion(juego1.tablero)) {
+    imp(juego1.algoritmoAEstrella());
+} else {
+    console.log("\n~~~~ \njuego 1 sin solucion\n~~~~")
+}
+
+if (juego2.tieneSolucion(juego2.tablero)) {
+    imp(juego2.algoritmoAEstrella());
+} else {
+    console.log("\n~~~~ \njuego 2 sin solucion\n~~~~")
+}
+
+if (juego3.tieneSolucion(juego3.tablero)) {
+    imp(juego3.algoritmoAEstrella());
+} else {
+    console.log("\n~~~~ \njuego 3 sin solucion\n~~~~")
+}
+
+if (juego4.tieneSolucion(juego4.tablero)) {
+    imp(juego4.algoritmoAEstrella());
+} else {
+    console.log("\n~~~~ \njuego 4 sin solucion\n~~~~")
+}
+//*/
