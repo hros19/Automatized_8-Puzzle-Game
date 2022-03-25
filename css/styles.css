@@ -1,7 +1,14 @@
 html {
     height: 100%;
     overflow: hidden;
-    background: radial-gradient(ellipse at bottom, #1b2735, #090a0f 100%);
+    background: radial-gradient(ellipse at bottom, #1b2735, #444b70 100%);
+}
+
+/* hay que cambiarlo, es que choca con todo el resto de css */
+.tituloPruebaHayQueBorrarlo{
+    font-size: 24;
+    color: white;
+
 }
 
 .title {
@@ -29,7 +36,8 @@ html {
 body {
     width: 100%;
     height: 100%;
-    display: grid;
+    /* Comenté esto para que no se viera todo extendido por la pantalla, los componentes */
+    /* display: grid; */ 
     position: relative;
     align-items: center;
 }
