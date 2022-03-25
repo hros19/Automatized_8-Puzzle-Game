@@ -8,14 +8,12 @@ class Nodo {
      * Cosntructor Principal.
      * Recibe por parametro un estado (una matriz) que indica el estado
      * del tablero y su respectivo peso.
-     * @param {Array} estado Estado actual del tablero 
+     * @param {Matriz} estado Estado actual del tablero 
      * @param {Integer} peso Peso asignado al estado
-     * @param {Integer} altura altura del nodo con respecto a la raiz
      */
-    constructor (estado, peso, altura) {
+    constructor (estado, peso) {
       this.estado = estado;
       this.peso = peso;
-      this.altura = altura;
     }
 
     /**
@@ -241,6 +239,7 @@ class Nodo {
                     i = Number(i);
                     j = Number(j);
                     let posicionesOriginales = this.obtenerPosDestino(this.estado[i][j]);
+                    //console.log("S: ", this.estado[i][j], Math.abs(i - posicionesOriginales[0]) + Math.abs(j - posicionesOriginales[1]))
                     distancia += Math.abs(i - posicionesOriginales[0]) + Math.abs(j - posicionesOriginales[1]);
                 }
             }
