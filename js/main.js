@@ -70,20 +70,46 @@ matrizVacia = [
   [0, 0, 0]
 ]
 
+//Se encarga de cambiar el valor de la celda 
+setCellInfo = (input) => {
+  var td = input.parentElement
+  var originalText = input.parentElement.getAttribute('data-text')
+  var currentText = input.value
+
+  if(originalText != currentText){
+    //Hay cambios en el texto de la celda
+    td.removeAttribute('data-clicked')
+    td.removeAttribute('data-text')
+    td.innerHTML = currentText
+    console.log(originalText + " ahora es " + currentText);
+  }else{
+    td.removeAttribute('data-clicked')
+    td.removeAttribute('data-text')
+    td.innerHTML = originalText
+    console.log('No se realizaron cambios');
+  }
+}
+
 //Función que agrega un input a la celda de la tabla, para editar su contenido 
 //
-setCellInfo = (htmlElement) => {
+setCellEditable = (htmlElement) => {
+
+  if( htmlElement.hasAttribute('data-clicked') ){
+    return
+  }
   
-  console.log(htmlElement.innerHTML);
+  htmlElement.setAttribute('data-cliked','yesy')
+  htmlElement.setAttribute('data-text', htmlElement.innerHTML)
+  
   var input = document.createElement('input')
   input.setAttribute('type','text')
   input.value = htmlElement.innerHTML
+  input.onblur = function(){setCellInfo(input)}  //Llama la función de cambiar el contenido cuando se da click en otro lado 
 
   htmlElement.innerHTML = ''
   htmlElement.append(input)
   htmlElement.firstElementChild.select()
   
-
 }
 
 //Muestra la matriz en pantalla, utilizando la tabla en el html 
@@ -104,7 +130,7 @@ setDocumentTable = (matrix, documentTable) => {
             // columnText.setAttribute('value', column);
 
             columnTable.appendChild(columnText) //Append del texto al td 
-            columnTable.onclick = function(){ setCellInfo(this)} //EN FASE DE PRUEBA, acá agrega la función a cada celda
+            columnTable.onclick = function(){ setCellEditable(this)} //EN FASE DE PRUEBA, acá agrega la función a cada celda
 
             rowTable.appendChild(columnTable) //Apend del td al tr 
         });
