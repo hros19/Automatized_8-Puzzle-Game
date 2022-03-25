@@ -12,24 +12,24 @@ h(n) la funcion heuristica. Estima el costo para ir desde el estado (n) hasta el
 
 */
 
-let estados = [];
+// let estados = [];
 
-estados.push([
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 0]
-]);
-estados.push([
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 0, 8]
-]);
+// estados.push([
+//     [1, 2, 3],
+//     [4, 5, 6],
+//     [7, 8, 0]
+// ]);
+// estados.push([
+//     [1, 2, 3],
+//     [4, 5, 6],
+//     [7, 0, 8]
+// ]);
 
-let i = estados.length - 1;
-while (i >= 0) {
-    console.log(estados[i]);
-    i--;
-}
+// let i = estados.length - 1;
+// while (i >= 0) {
+//     console.log(estados[i]);
+//     i--;
+// }
 
 
 
@@ -70,24 +70,57 @@ matrizVacia = [
   [0, 0, 0]
 ]
 
+
+
+//Devuelve la fila y la columna de un elemento en la matriz
+getRowColumn = (matrix, search) =>{
+  const row = matrix.findIndex(row => row.includes(search))
+  const col = matrix[row].indexOf(search)
+  return [row,col]
+}
+
+
+//Intercambia el número en la celda, con la posicion del original en la matriz 
+swapCellInfo = ( originalNumber, currentNumber, originalMatrix ) => {
+
+  originalPos = getRowColumn(originalMatrix, originalNumber)  
+  currentPos = getRowColumn(originalMatrix, currentNumber)
+  
+  originalMatrix[originalPos[0]][originalPos[1]] = currentNumber
+  originalMatrix[currentPos[0]][currentPos[1]] = originalNumber
+
+  //console.log(originalMatrix);
+
+  setDocumentTable(originalMatrix, 'table_Puzzle')
+}
+
 //Se encarga de cambiar el valor de la celda 
-setCellInfo = (input) => {
+setCellInfo = (input, originalMatrix) => {
   var td = input.parentElement
   var originalText = input.parentElement.getAttribute('data-text')
   var currentText = input.value
 
-  if(originalText != currentText){
-    //Hay cambios en el texto de la celda
-    td.removeAttribute('data-clicked')
-    td.removeAttribute('data-text')
-    td.innerHTML = currentText
-    console.log(originalText + " ahora es " + currentText);
-  }else{
-    td.removeAttribute('data-clicked')
-    td.removeAttribute('data-text')
-    td.innerHTML = originalText
-    console.log('No se realizaron cambios');
+  td.removeAttribute('data-clicked')
+  td.removeAttribute('data-text')
+  if( isNaN(currentText) ){
+    alert('No puede Ingresar Texto')
+
+  }else if( parseInt(currentText) > 8 || parseInt(currentText) < 0 ){
+    alert('Debe ingresar un número entre 0-8')
+
+  }else if( originalText != currentText ){
+
+    swapCellInfo(parseInt(originalText), parseInt(currentText), originalMatrix)
+
+     //td.innerHTML = currentText
+     console.log(originalText + " ahora es " + currentText);
+
+    return
   }
+
+  td.innerHTML = originalText
+  console.log('No se realizaron cambios');
+
 }
 
 //Función que agrega un input a la celda de la tabla, para editar su contenido 
@@ -101,10 +134,12 @@ setCellEditable = (htmlElement) => {
   htmlElement.setAttribute('data-cliked','yesy')
   htmlElement.setAttribute('data-text', htmlElement.innerHTML)
   
+  const originalMatrix = getMatrizDocument("table_Puzzle")   //Acá me da la matriz original
+  
   var input = document.createElement('input')
   input.setAttribute('type','text')
   input.value = htmlElement.innerHTML
-  input.onblur = function(){setCellInfo(input)}  //Llama la función de cambiar el contenido cuando se da click en otro lado 
+  input.onblur = function(){setCellInfo(input, originalMatrix)}  //Llama la función de cambiar el contenido cuando se da click en otro lado 
 
   htmlElement.innerHTML = ''
   htmlElement.append(input)
@@ -116,49 +151,35 @@ setCellEditable = (htmlElement) => {
 //matrix: matriz a "imprimir"
 //documentTable: id de la tabla en el HTML
 setDocumentTable = (matrix, documentTable) => {
-    var documentTable = document.getElementById(documentTable) //Busca el elemento tabla en el HTML
 
-    matrix.forEach(row => { //Por cada fila en la matriz,
-        var rowTable = document.createElement("tr") //Crea un elemento tr
+  var documentTable = document.getElementById(documentTable) //Busca el elemento tabla en el HTML
 
-        row.forEach(column => { //Por cada columna en la fila 
-            var columnTable = document.createElement("td") //crea un elemento td
-            var columnText = document.createTextNode(column)
-
-            // const columnText = document.createElement("input");
-            // columnText.setAttribute('type', "text");
-            // columnText.setAttribute('value', column);
-
-            columnTable.appendChild(columnText) //Append del texto al td 
-            columnTable.onclick = function(){ setCellEditable(this)} //EN FASE DE PRUEBA, acá agrega la función a cada celda
-
-            rowTable.appendChild(columnTable) //Apend del td al tr 
-        });
-        documentTable.appendChild(rowTable) // Append del rt al table
-    });
-}
-
-
-//Es para probar una cosa, pero no creo que funcione al final
-//Ya que pasé la funcionalidad, cuando se crea la tabla en la funcieon de setDocumentTable 
-setDocumentTableEditable = (tableName) => {
-
-  var tabla = document.getElementById(tableName)
-  var celdas = tabla.getElementsByTagName('td')
-
-  console.log(celdas);
-
-  for (let i = 0; i < celdas.length; i++) {
-
-    celdas[i].onClick = function() {alert('cliked')}
-
-    console.log(celdas[i]);
-    
+  
+  //Verifica si table tiene elementos, si los tiene los elimina. 
+  while (documentTable.hasChildNodes()) {
+    documentTable.removeChild(documentTable.firstChild);
   }
+  
+  //Agrega los elementos de la matriz 
+  matrix.forEach(row => { //Por cada fila en la matriz,
+      var rowTable = document.createElement("tr") //Crea un elemento tr
 
+      row.forEach(column => { //Por cada columna en la fila 
+          var columnTable = document.createElement("td") //crea un elemento td
+          var columnText = document.createTextNode(column)
+
+          // const columnText = document.createElement("input");
+          // columnText.setAttribute('type', "text");
+          // columnText.setAttribute('value', column);
+
+          columnTable.appendChild(columnText) //Append del texto al td 
+          columnTable.onclick = function(){ setCellEditable(this)} //EN FASE DE PRUEBA, acá agrega la función a cada celda
+
+          rowTable.appendChild(columnTable) //Apend del td al tr 
+      });
+      documentTable.appendChild(rowTable) // Append del rt al table
+  });
 }
-
-
 
 
 // Función para tomar la info de la matriz del html y convertila en una lista
@@ -174,8 +195,8 @@ getMatrizDocument = (nombreTablaHTML) => {
     var allTDsInTR = allTRs[ trCounter ].getElementsByTagName( "td" );
     for ( var tdCounter = 0; tdCounter < allTDsInTR.length; tdCounter++ )
     {
-        //console.log(allTDsInTR[ tdCounter ].innerHTML );   //Acá toma el valor del elemento
-        tmpArr.push( allTDsInTR[ tdCounter ].innerHTML );
+        var digit = parseInt( allTDsInTR[ tdCounter ].innerHTML )
+        tmpArr.push( digit );
     }
     arr.push( tmpArr );
   }
@@ -185,7 +206,8 @@ getMatrizDocument = (nombreTablaHTML) => {
 setDocumentTable(matrizEjercicio1, 'table_Puzzle');
 setDocumentTable(matrizVacia, 'table_PuzzleSolucion');
 
-//setDocumentTableEditable('table_Puzzle')
+
+
 
 
 ejecutarJuego = () => {

@@ -90,9 +90,6 @@ class Juego {
             }
         } while (true);
     }
-
-
-
 }
 
 let juego1 = new Juego([
