@@ -237,12 +237,17 @@ const getSolution = () => {
 //
 const nextStep = () => {
   console.log("Siguiente paso");
+  //Bloquear la Matriz 
+  document.getElementById("table_Puzzle").classList.remove("enableTable") //
+  document.getElementById("table_Puzzle").classList.add("disableTable") //
+
+  alert("No puede editar la tabla mientras ejecuta el juego paso a paso ")
+  
   if (!Array.isArray(solucionPasoAPaso)) {
     solucionPasoAPaso = getSolution()
     setDocumentTable(solucionPasoAPaso.shift().estado,'table_Puzzle' )  //Muestra el Siguiente paso en la interfaz
     //Bloquear los botones de solución
   }
-
 
   if (solucionPasoAPaso.length > 0) {
     setDocumentTable(solucionPasoAPaso.shift().estado,'table_Puzzle' )  //Muestra el Siguiente paso en la interfaz
@@ -288,6 +293,7 @@ const runSolution = () => {
 
 
 const changeAlgorithm = () => {
+  //solucionPasoAPaso = 0 //Si cambia el algoritmo, resetea el paso a pas//o No funcionó 
   var bodyHTML = document.getElementsByTagName( 'body' )
   var algNameHTML = document.getElementById('alg_Name')
 
@@ -305,6 +311,29 @@ const changeAlgorithm = () => {
     algNameHTML.innerHTML = 'A Estrella'
   }
 
+
+}
+
+const resetAll = () => {
+  console.log("Reiniciando Juego");
+
+  document.getElementById("table_Puzzle").classList.remove("disableTable") //
+  document.getElementById("table_Puzzle").classList.add("enableTable") //
+
+  juegoMain = new Juego(matrizObjetivo)
+  selectedAlgorithm = 'A*'   //'A*' ejecuta AEstrella  'Back' ejecuta Backtracking
+  solucionPasoAPaso = 0
+  setDocumentTable(matrizEjercicio1, 'table_Puzzle');
+}
+
+const changeWBlanck = () => {
+  const number = document.getElementById("changeWBlank_Input")
+  if( number != '' && parseInt(number) > 0 && parseInt(number) <= 8 ){
+    swapCellInfo( 0, parseInt(number.value), getMatrizDocument('table_Puzzle') )
+    solucionPasoAPaso = getSolution() //Carga la nueva solución en la lista 
+  }else{
+    alert("Debe ingresar un número entre 1-8 en el input, para intercambiar con la pieza vacía")
+  }
 
 }
 

@@ -53,6 +53,24 @@ body {
     background: white
 }
 
+.transparentFilm {
+    display: grid;
+    text-align: center;
+    background: rgba(255, 255, 0, 0);
+}
+
+.disableTable {
+    z-index: -1;
+}
+
+.enableTable{
+    z-index: 1;
+}
+
+.table{
+    color: red;
+}
+
 .unselectedNumbers {
     margin: 0;
     position: absolute;
