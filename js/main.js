@@ -1,3 +1,4 @@
+//const { Juego } = require('./Juego.js');
 /* 
 A* trabaja de forma similar que BFS con las sig diferencias
   - en lugar de una cola, se una cola de prioridad
@@ -32,7 +33,6 @@ h(n) la funcion heuristica. Estima el costo para ir desde el estado (n) hasta el
 // }
 
 
-
 // document.addEventListener("DOMContentLoaded", () => {
 //     generarTablero();
 
@@ -49,26 +49,7 @@ h(n) la funcion heuristica. Estima el costo para ir desde el estado (n) hasta el
 // });
 
 
-//Matrices de prueba
 
-matrizObjetivo = [
-  [1, 2, 3],
-  [4, 5, 6],
-  [7, 8, 0]
-]
-
-
-matrizEjercicio1 = [
-  [1, 2, 3],
-  [0, 4, 6],
-  [7, 5, 8]
-]
-
-matrizVacia = [
-  [0, 0, 0],
-  [0, 0, 0],
-  [0, 0, 0]
-]
 
 
 
@@ -203,26 +184,47 @@ getMatrizDocument = (nombreTablaHTML) => {
   return(arr)
 }
 
+//Matrices de prueba
+
+matrizObjetivo = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 0]
+]
+
+
+matrizEjercicio1 = [
+  [1, 2, 3],
+  [0, 4, 6],
+  [7, 5, 8]
+]
+
+matrizVacia = [
+  [0, 0, 0],
+  [0, 0, 0],
+  [0, 0, 0]
+]
+
+
 setDocumentTable(matrizEjercicio1, 'table_Puzzle');
-setDocumentTable(matrizVacia, 'table_PuzzleSolucion');
-
-
-
 
 
 ejecutarJuego = () => {
 
   console.log("Ejecutando Juego desde el Main")  //Solo para probar que el juego funcione
-  console.log( getMatrizDocument('table_Puzzle') )
+
+  let juego2 = new Juego([
+    [6, 8, 0],
+    [2, 1, 3],
+    [7, 4, 5]
+  ]);
+
+  let res2 = juego2.algoritmoAEstrella();
+
+  for(let i in res2) {
+    res2[i].mostrar();
+  }//*/
+
+  
 }
 
-/*
-const draggables = document.querySelectorAll('.draggable')
-const unselectedContainer = document.querySelector('.unselectedNumbers')
-const selectedContainer = documenr.querySelector('.selectedNumbers')
-
-draggables.forEach(draggable => {
-  draggable.addEventListener('dragstart', () => {
-    console.log("siuuuu")
-  })
-})*/

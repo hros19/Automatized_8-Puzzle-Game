@@ -1,5 +1,7 @@
-const { Nodo, ColaPrioridad } = require('./colaPrioridad.js');
+//const { Nodo, ColaPrioridad } = require('./colaPrioridad.js');
+
 const matrizSolucion = [[1,2,3],[4,5,6],[7,8,0]];
+
 class Juego {
     /**
      * Constructor de la clase Juego.
@@ -92,23 +94,28 @@ class Juego {
     }
 }
 
-let juego1 = new Juego([
-    [1, 2, 3],
-    [0, 4, 6],
-    [7, 5, 8]
-]);
+
+
+
+// let juego1 = new Juego([
+//     [1, 2, 3],
+//     [0, 4, 6],
+//     [7, 5, 8]
+// ]);
 
 //let res1 = juego1.algoritmoAEstrella();
 
-let juego2 = new Juego([
-    [6, 8, 0],
-    [2, 1, 3],
-    [7, 4, 5]
-]);
-//console.log(juego2.compararMatrices([[1,2,3],[4,5,6],[7,8,0]], [[1,2,3],[4,5,6],[7,8,9]]))
+// let juego2 = new Juego([
+//     [6, 8, 0],
+//     [2, 1, 3],
+//     [7, 4, 5]
+// ]);
+// //console.log(juego2.compararMatrices([[1,2,3],[4,5,6],[7,8,0]], [[1,2,3],[4,5,6],[7,8,9]]))
 
-let res2 = juego2.algoritmoAEstrella();
+// let res2 = juego2.algoritmoAEstrella();
 
-for(let i in res2) {
-    res2[i].mostrar();
-}//*/
+// for(let i in res2) {
+//     res2[i].mostrar();
+// }//*/
+
+// module.exports = {Juego}

@@ -252,7 +252,7 @@ class Nodo {
  * Clase ColaPrioridad.
  * Estructura principal para manejar los estados del tablero y sus pesos asociados.
  */
-class ColaPrioridad {
+ class ColaPrioridad {
     constructor () {
       this.elementos = [];
     }
@@ -297,5 +297,7 @@ class ColaPrioridad {
 }
 
 
-let n = new Nodo([[1,2,3],[4,5,6],[7,8,0]], 2);
-module.exports = { Nodo, ColaPrioridad };
+//let n = new Nodo([[1,2,3],[4,5,6],[7,8,0]], 2);
+//module.exports = { Nodo, ColaPrioridad };
+
+
