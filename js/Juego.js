@@ -60,7 +60,7 @@ class Juego {
 
     tieneSolucion(estado) {
         const fila = this.deMatrizAFila(estado);
-        console.log(fila);
+        //console.log(fila);
         let cont = 0;
         for (let i = 0; i < 8; i++) {
             for (let j = i+1; j < 9; j++) {

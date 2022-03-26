@@ -49,7 +49,23 @@ h(n) la funcion heuristica. Estima el costo para ir desde el estado (n) hasta el
 // });
 
 
+//Matrices de prueba
 
+matrizObjetivo = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 0]
+]
+
+
+matrizEjercicio1 = [
+  [1, 8, 2],
+  [0, 4, 3],
+  [7, 6, 5]
+]
+
+
+let juegoMain = new Juego(matrizObjetivo);
 
 
 
@@ -66,13 +82,23 @@ swapCellInfo = ( originalNumber, currentNumber, originalMatrix ) => {
 
   originalPos = getRowColumn(originalMatrix, originalNumber)  
   currentPos = getRowColumn(originalMatrix, currentNumber)
-  
-  originalMatrix[originalPos[0]][originalPos[1]] = currentNumber
-  originalMatrix[currentPos[0]][currentPos[1]] = originalNumber
 
-  //console.log(originalMatrix);
+  var newMatrix = originalMatrix.map( arr => arr.slice() )                  
 
-  setDocumentTable(originalMatrix, 'table_Puzzle')
+
+  newMatrix[originalPos[0]][originalPos[1]] = currentNumber
+  newMatrix[currentPos[0]][currentPos[1]] = originalNumber
+
+  if( juegoMain.tieneSolucion(newMatrix)){
+    console.log("Tiene Solución");
+    //juegoMain.tablero = newMatrix  //Se cambia el tablero del juego
+    setDocumentTable(newMatrix, 'table_Puzzle')
+  }else{
+    console.log("NO Tiene Solución");
+    alert("No tiene solución, no se puede hacer ese cambio")
+    setDocumentTable(originalMatrix, 'table_Puzzle')
+  }
+
 }
 
 //Se encarga de cambiar el valor de la celda 
@@ -92,10 +118,8 @@ setCellInfo = (input, originalMatrix) => {
   }else if( originalText != currentText ){
 
     swapCellInfo(parseInt(originalText), parseInt(currentText), originalMatrix)
-
      //td.innerHTML = currentText
-     console.log(originalText + " ahora es " + currentText);
-
+     //console.log(originalText + " ahora es " + currentText);
     return
   }
 
@@ -184,47 +208,42 @@ getMatrizDocument = (nombreTablaHTML) => {
   return(arr)
 }
 
-//Matrices de prueba
-
-matrizObjetivo = [
-  [1, 2, 3],
-  [4, 5, 6],
-  [7, 8, 0]
-]
-
-
-matrizEjercicio1 = [
-  [1, 2, 3],
-  [0, 4, 6],
-  [7, 5, 8]
-]
-
-matrizVacia = [
-  [0, 0, 0],
-  [0, 0, 0],
-  [0, 0, 0]
-]
 
 
 setDocumentTable(matrizEjercicio1, 'table_Puzzle');
 
 
-ejecutarJuego = () => {
 
-  console.log("Ejecutando Juego desde el Main")  //Solo para probar que el juego funcione
+sleep = (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-  let juego2 = new Juego([
-    [6, 8, 0],
-    [2, 1, 3],
-    [7, 4, 5]
-  ]);
 
-  let res2 = juego2.algoritmoAEstrella();
+showSolution = async (camino) => {
+  console.log(camino.length);
 
-  for(let i in res2) {
-    res2[i].mostrar();
-  }//*/
-
+  while (camino.length != 0 ) {
+    setDocumentTable(camino.shift().estado,'table_Puzzle' )
+    await sleep(300);
+  }
   
 }
 
+
+ejecutarJuego = () => {
+  //revizar Primero si tiene solución antes de ejecutar el algoritmo
+  //Inclusive cada vez que se cambia
+
+  console.log("Ejecutando Juego desde el Main")  //Solo para probar que el juego funcione
+
+  juegoMain.tablero = getMatrizDocument('table_Puzzle')
+
+  let res2 = juegoMain.algoritmoAEstrella()
+
+  
+
+  // for(let i in res2) {
+  //   console.log(res2[i].estado)
+  // }//*/
+  showSolution(res2)
+}
