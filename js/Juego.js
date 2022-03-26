@@ -143,6 +143,13 @@ let juego4 = new Juego([
     [7, 8, 0]
 ]);
 
+function imp(mat) {
+    for(let i in mat) {
+        mat[i].mostrar();
+    }
+    console.log("------------------------");
+}
+
 
 if (juego1.tieneSolucion(juego1.tablero)) {
     imp(juego1.algoritmoAEstrella());
