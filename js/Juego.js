@@ -114,6 +114,44 @@ class Juego {
             }
         } while (true);
     }
+    backtraing() {
+        let matriz = new Nodo(this.tablero, 0);
+        let camino = [];
+        let piezas = matriz.obtenerPiezasMovibles();
+        let flag = this.compararMatrices(matriz.obtenerCopiaTablero(),matrizSolucion);
+        while(!flag) {
+            if (piezas.length != 0){                                                                                                                                                                                                                                                                 
+                let copia = matriz.obtenerCopiaTablero();                 
+                let hijo = new Nodo(copia, 0); 
+                hijo.mover(piezas[0]);
+                hijo.mostrar();
+                if (hijo.esSolucion()) {
+                    console.log("entro");
+                    console.log(piezas[0]);
+                    camino.push([matriz, piezas]);
+                    matriz = hijo;
+                    piezas = matriz.obtenerPiezasMovibles();   
+                }
+                else {
+                    console.log("se fue");
+                    console.log(piezas[0]);
+                    piezas.shift();
+                    
+                }
+            }
+            if (camino.length != 0){
+                let pos = camino.length -1;
+                let column = 1;
+                piezas = camino[pos];
+                piezas.shift();
+                matriz = camino[pos][0];
+            }
+            if (camino.length == 0 && piezas.length == 0){
+                break;
+            }
+            flag = this.compararMatrices(matriz.obtenerCopiaTablero(),matrizSolucion);
+        } 
+    }
 }
 
 // tiene solucion
