@@ -192,7 +192,7 @@ if (juego1.tieneSolucion(juego1.tablero)) {
     console.log("\n~~~~ \njuego 1 sin solucion\n~~~~")
 }*/
 
-
+/*
 if (juego2.tieneSolucion(juego2.tablero)) {
     imp(juego2.algoritmoAEstrella());
 } else {
@@ -205,6 +205,9 @@ if (juegoB.tieneSolucion(juegoB.tablero)) {
 } else {
     console.log("\n~~~~ \njuego B sin solucion\n~~~~")
 }
+*/
+
+
 /*
 
 if (juego4.tieneSolucion(juego4.tablero)) {

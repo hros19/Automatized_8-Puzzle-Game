@@ -66,9 +66,8 @@ matrizEjercicio1 = [
 
 
 let juegoMain = new Juego(matrizObjetivo)
-// A* = A*
-// Back = Backtracking
-var selectedAlgorithm = 'A*'
+var selectedAlgorithm = 'A*'   //'A*' ejecuta AEstrella  'Back' ejecuta Backtracking
+var solucionPasoAPaso = 0
 
 
 
@@ -180,8 +179,13 @@ setDocumentTable = (matrix, documentTable) => {
           // columnText.setAttribute('type', "text");
           // columnText.setAttribute('value', column);
 
+
           columnTable.appendChild(columnText) //Append del texto al td 
           columnTable.onclick = function(){ setCellEditable(this)} //EN FASE DE PRUEBA, acá agrega la función a cada celda
+
+          if(column == 0){
+            columnTable.setAttribute('class', 'blank_piece')
+          }
 
           rowTable.appendChild(columnTable) //Apend del td al tr 
       });
@@ -212,45 +216,73 @@ getMatrizDocument = (nombreTablaHTML) => {
 }
 
 
+//Retorna la Solucion dependiendo del algoritmo seleccionado 
+const getSolution = () => {
 
-setDocumentTable(matrizEjercicio1, 'table_Puzzle');
+  if (selectedAlgorithm == "A*") {
+
+    console.log("Resolviendo con A*")  //Solo para probar que el juego funcione
+    juegoMain.tablero = getMatrizDocument('table_Puzzle')
+    return  juegoMain.algoritmoAEstrella()
+    
+  }else{
+
+    console.log("Resolviendo con Bactracking")  //Solo para probar que el juego funcione
+    juegoMain.tablero = getMatrizDocument('table_Puzzle')
+    return juegoMain.algoritmoBacktracking()
+  }
+}
+
+
+//
+const nextStep = () => {
+  console.log("Siguiente paso");
+  if (!Array.isArray(solucionPasoAPaso)) {
+    solucionPasoAPaso = getSolution()
+    setDocumentTable(solucionPasoAPaso.shift().estado,'table_Puzzle' )  //Muestra el Siguiente paso en la interfaz
+    //Bloquear los botones de solución
+  }
+
+
+  if (solucionPasoAPaso.length > 0) {
+    setDocumentTable(solucionPasoAPaso.shift().estado,'table_Puzzle' )  //Muestra el Siguiente paso en la interfaz
+  }else{
+    alert('Ya llegó a la solución')
+  }
+
+}
 
 
 
+//Detiene la ejecución una cantidad de milisegundos 
 sleep = (ms) => {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+//Devuelve el Siguiente paso en la lista de elementos 
 
-showSolution = async (camino) => {
-  var runAgainButton = document.getElementById('runButton')
+
+//Recorre la matriz de solución paso a paso
+const showSolution = async (camino) => {
+  var runAgainButton = document.getElementById('run_Button')
   
   runAgainButton.setAttribute('disabled',true);
-
 
   while (camino.length != 0 ) {
     setDocumentTable(camino.shift().estado,'table_Puzzle' )
     await sleep(100);
   }
   runAgainButton.removeAttribute('disabled');
-  
 }
 
 
-ejecutarJuego = () => {
+
+
+const runSolution = () => {
   //revizar Primero si tiene solución antes de ejecutar el algoritmo
   //Inclusive cada vez que se cambia
-  if (selectedAlgorithm == "A*") {
-
-    console.log("Resolviendo con A*")  //Solo para probar que el juego funcione
-    juegoMain.tablero = getMatrizDocument('table_Puzzle')
-    let res2 = juegoMain.algoritmoAEstrella()
-    showSolution(res2)
-    
-  }else{
-    console.log("Resolviendo con Bactracking")  //Solo para probar que el juego funcione
-
-  }
+  solucionPasoAPaso = 0 //Si ejecuta el paso a paso y se cansa y le da ejecutar, tonses resetea solucionPAP para que no vuelva de donde lo dejó 
+  showSolution(getSolution()) //Muestra la solucion paso a paso 
 
 }
 
@@ -275,3 +307,6 @@ const changeAlgorithm = () => {
 
 
 }
+
+
+setDocumentTable(matrizEjercicio1, 'table_Puzzle');

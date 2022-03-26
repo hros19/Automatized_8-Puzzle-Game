@@ -49,6 +49,10 @@ body {
     background: radial-gradient(ellipse at bottom, #1b2735, #39dab1 100%);
 }
 
+.blank_piece{
+    background: white
+}
+
 .unselectedNumbers {
     margin: 0;
     position: absolute;
