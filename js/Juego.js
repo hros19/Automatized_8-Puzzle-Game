@@ -125,6 +125,8 @@ class Juego {
                 let hijo = new Nodo(copia, 0); 
                 hijo.mover(piezas[0]);
                 hijo.mostrar();
+                camino.push([matriz, piezas]);
+                
                 if (hijo.esSolucion()) {
                     console.log("entro");
                     console.log(piezas[0]);
@@ -141,8 +143,7 @@ class Juego {
             }
             if (camino.length != 0){
                 let pos = camino.length -1;
-                let column = 1;
-                piezas = camino[pos];
+                piezas = camino[pos][1];
                 piezas.shift();
                 matriz = camino[pos][0];
             }
