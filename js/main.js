@@ -65,7 +65,10 @@ matrizEjercicio1 = [
 ]
 
 
-let juegoMain = new Juego(matrizObjetivo);
+let juegoMain = new Juego(matrizObjetivo)
+// A* = A*
+// Back = Backtracking
+var selectedAlgorithm = 'A*'
 
 
 
@@ -220,12 +223,16 @@ sleep = (ms) => {
 
 
 showSolution = async (camino) => {
-  console.log(camino.length);
+  var runAgainButton = document.getElementById('runButton')
+  
+  runAgainButton.setAttribute('disabled',true);
+
 
   while (camino.length != 0 ) {
     setDocumentTable(camino.shift().estado,'table_Puzzle' )
-    await sleep(300);
+    await sleep(100);
   }
+  runAgainButton.removeAttribute('disabled');
   
 }
 
@@ -233,17 +240,38 @@ showSolution = async (camino) => {
 ejecutarJuego = () => {
   //revizar Primero si tiene solución antes de ejecutar el algoritmo
   //Inclusive cada vez que se cambia
+  if (selectedAlgorithm == "A*") {
 
-  console.log("Ejecutando Juego desde el Main")  //Solo para probar que el juego funcione
+    console.log("Resolviendo con A*")  //Solo para probar que el juego funcione
+    juegoMain.tablero = getMatrizDocument('table_Puzzle')
+    let res2 = juegoMain.algoritmoAEstrella()
+    showSolution(res2)
+    
+  }else{
+    console.log("Resolviendo con Bactracking")  //Solo para probar que el juego funcione
 
-  juegoMain.tablero = getMatrizDocument('table_Puzzle')
+  }
 
-  let res2 = juegoMain.algoritmoAEstrella()
+}
 
-  
 
-  // for(let i in res2) {
-  //   console.log(res2[i].estado)
-  // }//*/
-  showSolution(res2)
+const changeAlgorithm = () => {
+  var bodyHTML = document.getElementsByTagName( 'body' )
+  var algNameHTML = document.getElementById('alg_Name')
+
+  if(selectedAlgorithm == 'A*'){
+    selectedAlgorithm = 'Back'
+    console.log("Backtracking Seleccionado");  
+    bodyHTML[0].setAttribute('class', 'bodyB')
+    algNameHTML.innerHTML = 'Backtracking'
+    
+    
+  }else{
+    selectedAlgorithm = "A*"
+    console.log("A* Seleccionado");  
+    bodyHTML[0].setAttribute('class', 'bodyA')
+    algNameHTML.innerHTML = 'A Estrella'
+  }
+
+
 }

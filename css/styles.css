@@ -1,7 +1,6 @@
 html {
     height: 100%;
     overflow: hidden;
-    background: radial-gradient(ellipse at bottom, #1b2735, #444b70 100%);
 }
 
 /* hay que cambiarlo, es que choca con todo el resto de css */
@@ -40,6 +39,14 @@ body {
     /* display: grid; */ 
     position: relative;
     align-items: center;
+}
+
+.bodyA {
+    background: radial-gradient(ellipse at bottom, #1b2735, #444b70 100%);
+}
+
+.bodyB {
+    background: radial-gradient(ellipse at bottom, #1b2735, #39dab1 100%);
 }
 
 .unselectedNumbers {
