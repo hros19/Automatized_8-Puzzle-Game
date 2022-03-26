@@ -116,12 +116,6 @@ class Juego {
     }
 }
 
-function imp(mat) {
-    for (let i in mat)
-        mat[i].mostrar();
-    console.log("\n\n\n\n\n\n\n\n\n\n\n\n");
-}
-
 // tiene solucion
 let juego1 = new Juego([
     [1, 2, 3],
