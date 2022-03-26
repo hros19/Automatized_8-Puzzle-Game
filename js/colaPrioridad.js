@@ -30,6 +30,12 @@ class Nodo {
         }
     }
 
+    /**
+     * Pregunta si el estado actual es igual al estado que entra por
+     * parametro en la funcion,
+     * @param {Matriz} estado Matriz que entra por parametro 
+     * @returns 
+     */
     estadosIguales(estado) {
         for (let i in this.estado) {
             for (let j in this.estado[0]) {
@@ -41,6 +47,10 @@ class Nodo {
         return true;
     }
 
+    /**
+     * Calcula y setea el peso del nodo actual con la distancia de manhattan y una altura pasada por parametro
+     * @param {Integer} altura actual del nodo en el proceso de solucion del juego.
+     */
     calcularPeso(altura) {
         this.peso = altura + this.calcularManhattan();
     }
@@ -138,6 +148,10 @@ class Nodo {
         }
     }
 
+    /**
+     * Genera una copia exacta del tablero.
+     * @returns Una copia exacta del tablero, como una matriz
+     */
     obtenerCopiaTablero() {
         let res = [[0,0,0],[0,0,0],[0,0,0]];
         for (let i in this.estado) {
@@ -148,6 +162,10 @@ class Nodo {
         return res;
     }
 
+    /**
+     * Consulta el estado de resolucion de la primera fila del tablero.
+     * @returns True, si la primera fila esta resulesta. False, caso contrario.
+     */
     primeraFilaResuelta() {
         for (let i in this.estado) {
             if (this.estado[0][i] != Number(i) + 1) {
@@ -157,6 +175,10 @@ class Nodo {
         return true;
     }
 
+    /**
+     * Funcion para retornar los hijos del tablero.
+     * @returns Un array con los nodos hijos del estado actual.
+     */
     obtenerHijos() {
         let hijos = [];
         let piezasMovibles = this.obtenerPiezasMovibles();
@@ -239,7 +261,6 @@ class Nodo {
                     i = Number(i);
                     j = Number(j);
                     let posicionesOriginales = this.obtenerPosDestino(this.estado[i][j]);
-                    //console.log("S: ", this.estado[i][j], Math.abs(i - posicionesOriginales[0]) + Math.abs(j - posicionesOriginales[1]))
                     distancia += Math.abs(i - posicionesOriginales[0]) + Math.abs(j - posicionesOriginales[1]);
                 }
             }
@@ -292,7 +313,7 @@ class Nodo {
      */
     pop() {
         if (this.estaVacia()) { return null; }
-            return this.elementos.pop();
+        return this.elementos.pop();
     }
 }
 
