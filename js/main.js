@@ -294,20 +294,21 @@ const runSolution = () => {
 
 const changeAlgorithm = () => {
   //solucionPasoAPaso = 0 //Si cambia el algoritmo, resetea el paso a pas//o No funcionó 
-  var bodyHTML = document.getElementsByTagName( 'body' )
+  var tableroHTML = document.getElementById( 'tablero' )
   var algNameHTML = document.getElementById('alg_Name')
 
   if(selectedAlgorithm == 'A*'){
     selectedAlgorithm = 'Back'
     console.log("Backtracking Seleccionado");  
-    bodyHTML[0].setAttribute('class', 'bodyB')
+    
+    tableroHTML.setAttribute('class', 'box_tablero bodyB')
     algNameHTML.innerHTML = 'Backtracking'
     
     
   }else{
     selectedAlgorithm = "A*"
     console.log("A* Seleccionado");  
-    bodyHTML[0].setAttribute('class', 'bodyA')
+    tableroHTML.setAttribute('class', 'box_tablero bodyA')
     algNameHTML.innerHTML = 'A Estrella'
   }
 

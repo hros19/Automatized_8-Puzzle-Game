@@ -1,46 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="css/styles.css">
+        <script src="js/colaPrioridad.js" defer></script>
+        <script src="js/Juego.js" defer></script>
+        <script src="js/main.js" defer></script>
+
+        <title>A* - 8 Puzzle </title>
+    </head>
+
+    <body>
+
+        <div class="container_1">
+
+            <div class="box_tablero bodyA" id="tablero">
+
+                <h2 class="titulo_tablero">Tabla Puzzle</h2> 
+                <h3 id="alg_Name" class="titulo_tablero">Algoritmo A*</h2> 
+                <table id="table_Puzzle" class="table enableTable "></table>
+                   
+            </div>
     
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="js/colaPrioridad.js" defer></script>
-    <script src="js/Juego.js" defer></script>
-    <script src="js/main.js" defer></script>
-
-    <title>A* - 8 Puzzle </title>
-</head>
-
-<body class="bodyA">
-
+            <div class="box_consola">
     
-    <h2 class="tituloPruebaHayQueBorrarlo">Tabla Puzzle</h2> 
-    <h3 id="alg_Name" class="tituloPruebaHayQueBorrarlo">Algoritmo A*</h2> 
-
-    <div class="transparentFilm">
-
-        <table id="table_Puzzle" class="enableTable table ">
-
-        </table>
-    </div>        
-
-
-    <button type="button" id="run_Button" onclick="runSolution()">Solucion</button>
-    <button type="button" id="changeAlg_Button" onclick="changeAlgorithm()">Cambiar Algoritmo</button>
-    <button type="button" id="nextStep_Button" onclick="nextStep()">Siguiente Paso</button>
-    <button type="button" id="reset_Button" onclick="resetAll()">Reset</button>
-
+                <p>log de eventos</p>
     
-    <input type="number" id="changeWBlank_Input" placeholder="Intercambiar Con Pieza Vacía" pattern="[1-8]{1}">
-    <button type="button" id"changeWBlank_Button" onclick="changeWBlanck()">Intercambiar</button>
+            </div>
 
+
+        </div>
+
+        <div class="container_2">
+            <div class="box_controles">
     
+                <button class="boton_controles" type="button" id="run_Button" onclick="runSolution()">Solucion</button>
+                <button class="boton_controles" type="button" id="changeAlg_Button" onclick="changeAlgorithm()">Cambiar Algoritmo</button>
+                <button class="boton_controles" type="button" id="nextStep_Button" onclick="nextStep()">Siguiente Paso</button>
+                <button class="boton_controles" type="button" id="reset_Button" onclick="resetAll()">Reset</button>
+                <button class="boton_controles" type="button" id"changeWBlank_Button" onclick="changeWBlanck()">Intercambiar</button>    
+                
+                <input class="input_controles"  type="number" id="changeWBlank_Input" placeholder="Intercambiar Con Pieza Vacía" pattern="[1-8]{1}">
     
+            </div>
+        </div>
 
-
-</body>
+    </body>
 
 </html>
