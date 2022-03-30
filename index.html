@@ -15,42 +15,27 @@
     </head>
 
     <body>
-
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
         <div class="container_1">
-
             <div class="box_tablero bodyA" id="tablero">
-
-                <h2 class="titulo_tablero">Tabla Puzzle</h2> 
-                <h3 id="alg_Name" class="titulo_tablero">Algoritmo A*</h2> 
-
+                <h2 class="titulo_tablero">8-Puzzle</h2>
+                <h3 id="alg_Name" class="subtitulo_tablero">Algoritmo A*</h3>
                 <table id="table_Puzzle" class="table"></table>
-                
-                   
             </div>
-    
-            <div class="box_consola">
-    
-                <p>log de eventos</p>
-    
-            </div>
-
-
-        </div>
-
-        <div class="container_2">
             <div class="box_controles">
-    
                 <button class="boton_controles" type="button" id="run_Button" onclick="runSolution()">Solucion</button>
                 <button class="boton_controles" type="button" id="changeAlg_Button" onclick="changeAlgorithm()">Cambiar Algoritmo</button>
                 <button class="boton_controles" type="button" id="nextStep_Button" onclick="nextStep()">Siguiente Paso</button>
                 <button class="boton_controles" type="button" id="reset_Button" onclick="resetAll()">Reset</button>
-                <button class="boton_controles" type="button" id="changeWBlank_Button" onclick="changeWBlanck()">Intercambiar</button>    
-                
-                <input class="input_controles"  type="number" id="changeWBlank_Input" placeholder="Intercambiar Con Pieza Vacía" pattern="[1-8]{1}">
-    
+                <button class="boton_controles" type="button" id="changeWBlank_Button" onclick="changeWBlanck()">Intercambiar</button>
+                <input class="input_controles"  type="number" id="changeWBlank_Input" placeholder="n° pieza" pattern="[1-8]{1}">
             </div>
         </div>
-
     </body>
-
+    <a href="https://github.com/hros19/Automatized_8-Puzzle-Game">
+        <img alt="Github Repo" src="https://raw.githubusercontent.com/hros19/images/main/icons8-github-256.svg"
+        width="115" height="115">
+    </a>
 </html>
