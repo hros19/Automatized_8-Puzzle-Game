@@ -72,6 +72,20 @@ class Juego {
         return cont % 2 == 0;
     }
 
+    esTableroValido() {
+        let res = [0,1,2,3,4,5,6,7,8];
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                let n = this.tablero[i][j];
+                let index = res.indexOf(n);
+                if (index > -1) {
+                    res.splice(index, 1);
+                }
+            }
+        }
+        return res.length == 0;
+    }
+
     algoritmoAEstrella() {
         this.camino = [];
         let listaEstados = new ColaPrioridad();                          
@@ -173,17 +187,20 @@ let juego3 = new Juego([
 ]);
 
 let juego4 = new Juego([
-    [2, 1, 3],
+    [1, 2, 3],
     [4, 5, 6],
     [7, 8, 0]
 ]);
 
+/*
 function imp(mat) {
     for(let i in mat) {
         mat[i].mostrar();
     }
     console.log("------------------------");
-}
+}*/
+
+//console.log(juego4.esTableroValido());
 
 /*
 if (juego1.tieneSolucion(juego1.tablero)) {
