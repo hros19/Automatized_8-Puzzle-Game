@@ -238,8 +238,8 @@ const getSolution = () => {
 const nextStep = () => {
   console.log("Siguiente paso");
   //Bloquear la Matriz 
-  document.getElementById("table_Puzzle").classList.remove("enableTable") //
-  document.getElementById("table_Puzzle").classList.add("disableTable") //
+  // document.getElementById("table_Puzzle").classList.remove("enableTable") //
+  // document.getElementById("table_Puzzle").classList.add("disableTable") //
 
   //alert("No puede editar la tabla mientras ejecuta el juego paso a paso ")
   
