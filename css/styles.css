@@ -1,15 +1,15 @@
 html {
-    overflow:hidden;
     background-color: rgb(13, 13, 83);
     visibility: 0%;
+    overflow: hidden;
 }
 
 body {
     display:list-item;
     height: auto;
     width: 100%;
-    overflow: hidden;
-    background-image: linear-gradient(to right, #24243e, #141E30, #0f0c29);  
+    background-image: linear-gradient(to right, #24243e, #141E30, #0f0c29);
+    overflow: hidden;  
 }
 /* ##################    Contenedor    ################## */
 /* ##################    Tablero    ################## */
