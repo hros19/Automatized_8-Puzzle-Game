@@ -68,6 +68,7 @@ matrizEjercicio1 = [
 let juegoMain = new Juego(matrizObjetivo)
 var selectedAlgorithm = 'A*'   //'A*' ejecuta AEstrella  'Back' ejecuta Backtracking
 var solucionPasoAPaso = 0
+var isStepByStep = false
 
 
 
@@ -134,24 +135,28 @@ setCellInfo = (input, originalMatrix) => {
 //
 setCellEditable = (htmlElement) => {
 
-  if( htmlElement.hasAttribute('data-clicked') ){
-    return
+  if (!isStepByStep) {
+    if( htmlElement.hasAttribute('data-clicked') ){
+      return
+    }
+    
+    htmlElement.setAttribute('data-cliked','yesy')
+    htmlElement.setAttribute('data-text', htmlElement.innerHTML)
+    
+    const originalMatrix = getMatrizDocument("table_Puzzle")   //Acá me da la matriz original
+    
+    var input = document.createElement('input')
+    input.setAttribute('type','text')
+    input.value = htmlElement.innerHTML
+    input.onblur = function(){setCellInfo(input, originalMatrix)}  //Llama la función de cambiar el contenido cuando se da click en otro lado 
+  
+    htmlElement.innerHTML = ''
+    htmlElement.append(input)
+    htmlElement.firstElementChild.select()
+  }else{
+    console.log("No se puede editar en paso a paso");
   }
-  
-  htmlElement.setAttribute('data-cliked','yesy')
-  htmlElement.setAttribute('data-text', htmlElement.innerHTML)
-  
-  const originalMatrix = getMatrizDocument("table_Puzzle")   //Acá me da la matriz original
-  
-  var input = document.createElement('input')
-  input.setAttribute('type','text')
-  input.value = htmlElement.innerHTML
-  input.onblur = function(){setCellInfo(input, originalMatrix)}  //Llama la función de cambiar el contenido cuando se da click en otro lado 
 
-  htmlElement.innerHTML = ''
-  htmlElement.append(input)
-  htmlElement.firstElementChild.select()
-  
 }
 
 //Muestra la matriz en pantalla, utilizando la tabla en el html 
@@ -237,6 +242,7 @@ const getSolution = () => {
 //
 const nextStep = () => {
   console.log("Siguiente paso");
+  isStepByStep = true
   //Bloquear la Matriz 
   // document.getElementById("table_Puzzle").classList.remove("enableTable") //
   // document.getElementById("table_Puzzle").classList.add("disableTable") //
@@ -316,9 +322,10 @@ const changeAlgorithm = () => {
 
 const resetAll = () => {
   console.log("Reiniciando Juego");
+  isStepByStep = false
 
-  document.getElementById("table_Puzzle").classList.remove("disableTable") //
-  document.getElementById("table_Puzzle").classList.add("enableTable") //
+  // document.getElementById("table_Puzzle").classList.remove("disableTable") //
+  // document.getElementById("table_Puzzle").classList.add("enableTable") //
 
   juegoMain = new Juego(matrizObjetivo)
   selectedAlgorithm = 'A*'   //'A*' ejecuta AEstrella  'Back' ejecuta Backtracking
@@ -327,8 +334,11 @@ const resetAll = () => {
 }
 
 const changeWBlanck = () => {
+  
   const number = document.getElementById("changeWBlank_Input")
-  if( number != '' && parseInt(number) > 0 && parseInt(number) <= 8 ){
+  
+
+  if( number.value != '' && parseInt(number.value) > 0 && parseInt(number.value) <= 8 ){
     swapCellInfo( 0, parseInt(number.value), getMatrizDocument('table_Puzzle') )
     solucionPasoAPaso = getSolution() //Carga la nueva solución en la lista 
   }else{

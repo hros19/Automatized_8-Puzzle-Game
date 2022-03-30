@@ -36,19 +36,21 @@
     background: white
 }
 
-.disableTable {
+/* .disableTable {
     z-index: -1;
 }
 
 .enableTable{
     z-index: 1;
-}
+} */
 
 .table{
     order: 2;
     color: red;
     align-self: center;
 }
+
+
 /* Tabla que contiene la matriz */
 table, th{
     border: 1px solid;
