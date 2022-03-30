@@ -4,6 +4,10 @@ html {
     overflow: hidden;
 }
 
+a {
+    position:sticky;
+}
+
 body {
     margin-left: -5px;
     margin-bottom: -5px;
