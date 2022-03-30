@@ -1,21 +1,34 @@
-# Análisis de Algoritmos. Proyecto 01. Puzzle-8
-Primer proyecto del curso de Análisis de Algoritmos del Instituto Tecnológico de Costa Rica.
+# Automatized 8-Puzzle Game :brain:
+First approach to automatized and 8-Puzzle game using backtracking and A* algorithms.
 
-![](https://img.shields.io/badge/JavaScript-ED8B00?style=plastic&logo=javascript&logoColor=white) ![](https://img.shields.io/badge/-CSS3-blue?style=plastic&logo=css3&logoColor=white) ![](https://img.shields.io/badge/-HTML-red?style=plastic&logo=html5&logoColor=white)
+![](https://img.shields.io/badge/JavaScript-ED8B00?style=for-the-badge&logo=javascript&logoColor=white) ![](https://img.shields.io/badge/-CSS3-blue?style=for-the-badge&logo=css3&logoColor=white) ![](https://img.shields.io/badge/-HTML-red?style=for-the-badge&logo=html5&logoColor=white) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-## Objetivo Principal
-Implementar las estrategias de búsqueda heurística A* y Backtracking para la resolución del problema del puzzle-8.
+## Description 
+This application plays the 8-Puzzle game by itself, where the user can choose between two algorithms (Backtraking and A*). It also allows you to customize the start board that the user wants, as well as a step-by-step solution to see how the algorithm behaves graphically.
 
-## Descripción de la actividad
-Puzzle-8 es un juego de un único jugador que consiste en un tablero de 9 posiciones (puede ser dinámico), y ocho fichas numeradas del 1 al 8, situadas en el tablero, quedando una posición del tablero vacía.
+## How to run the project 🤖
+Opening the index.js file on your browser or you can deploy it [clicking here](https://hros19.github.io/Automatized_8-Puzzle-Game/).
 
-El objetivo del juego es alcanzar una determinada posición de las fichas a partir de una dispoción inicial realizando solo los movimientos permitidos, que son moves una ficha adyacente a la posición vacía de forma horizontal o vertical, ocupando la posición vacía y quedando en un lugar vacía la casilla ocupada anteriormente por la ficha movida.
+## How to use the app ✍️
+You cant play as well, but you can change the environment in which the algorithms are going to be developed. Before going in to the buttons, you can select each position of the board and make your custom one, just becareful to select a valid board and a solvable board or the application would notice you.
 
-En esta actividad se debe utilizar backtracking y la estrategia de búsqueda heurística A* con el fin de resolver el problema del puzzle-8. Utiliza como heurística el número de fichas mal colocadas respecto al estado objetivo. Considera que el coste de cada movimiento es 1.
+Then, we have some buttons in the application, these are:
+- **Solución/Solution**: runs the algorithm is selected, the default algorithm is A*.
+- **Cambiar/Change**: since there are only two, it alternates between the implemented algorithms (A*/Backtracking).
+- **Sig Paso/Next step**: would perform a single step that the algorithm make, you can go ahead and view each movement the algorithm make to take a decision in every state of the game.
+- **Reset**: reset to the initial status of the application, making restarting easy, without having to refresh the page.
+- **Intercambiar/swap**: this button is associated with the input next to it. If you are viewing the algorithm step by step, you have the possibility of changing the state of the board to a preferred one (overriding the decision made by the algorithm).
 
-![Game example](https://imgs.search.brave.com/5hMI_O43n1SxdFP4fnM9SwlvrRflNl9evvQLIYHnYq4/rs:fit:449:248:1/g:ce/aHR0cHM6Ly91c2Vy/LWltYWdlcy5naXRo/dWJ1c2VyY29udGVu/dC5jb20vMTEzMzg1/NzkvNTE1Mzg3NTct/YzRkOWFhODAtMWU1/YS0xMWU5LTk0MWYt/NDA4NjNkNzU5NjI1/LkpQRw)
 
-## Autores
-![Hansol's GitHub stats](https://github-readme-stats.vercel.app/api?username=hros19&theme=dark&show_icons=true&count_private=true)
-![Josué's GitHub stats](https://github-readme-stats.vercel.app/api?username=jochaes&theme=dark&show_icons=true&count_private=true)
-![Benjamin's GitHub stats](https://github-readme-stats.vercel.app/api?username=JoshJohnson2001&theme=dark&show_icons=true&count_private=true)
+## Authors 🤓
+![Hansol's GitHub stats](https://github-readme-stats.vercel.app/api?username=hros19&bg_color=60,1c3773,0055fb&title_color=ff5d05&text_color=fff&show_icons=true&count_private=true&icon_color=FF3838)
+
+![Josue's GitHub stats](https://github-readme-stats.vercel.app/api?username=jochaes&bg_color=60,1c3773,0055fb&title_color=ff5d05&text_color=fff&show_icons=true&count_private=true&icon_color=FF3838)
+
+![Benjamin's GitHub stats](https://github-readme-stats.vercel.app/api?username=JoshJohnson2001&bg_color=60,1c3773,0055fb&title_color=ff5d05&text_color=fff&show_icons=true&count_private=true&icon_color=FF3838)
+
+## Credits :bow:
+- We want to thanks [Geekforgeeks](https://www.geeksforgeeks.org), we use this [algorithm](https://www.geeksforgeeks.org/check-instance-8-puzzle-solvable/) to ensure that the board selected in the application have a solution, this is very useful because maybe (trust me, just maybe) the application could not work properly.
+
+## License
+This project is currently using [MIT license](https://www.mit.edu/~amini/LICENSE.md)
