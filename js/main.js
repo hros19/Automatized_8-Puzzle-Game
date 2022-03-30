@@ -59,9 +59,9 @@ matrizObjetivo = [
 
 
 matrizEjercicio1 = [
-  [1, 8, 2],
-  [0, 4, 3],
-  [7, 6, 5]
+  [2, 1, 3],
+  [4, 5, 6],
+  [8, 7, 0]
 ]
 
 
@@ -241,7 +241,7 @@ const nextStep = () => {
   document.getElementById("table_Puzzle").classList.remove("enableTable") //
   document.getElementById("table_Puzzle").classList.add("disableTable") //
 
-  alert("No puede editar la tabla mientras ejecuta el juego paso a paso ")
+  //alert("No puede editar la tabla mientras ejecuta el juego paso a paso ")
   
   if (!Array.isArray(solucionPasoAPaso)) {
     solucionPasoAPaso = getSolution()
@@ -303,7 +303,6 @@ const changeAlgorithm = () => {
     
     tableroHTML.setAttribute('class', 'box_tablero bodyB')
     algNameHTML.innerHTML = 'Backtracking'
-    
     
   }else{
     selectedAlgorithm = "A*"
