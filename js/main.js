@@ -88,20 +88,19 @@ swapCellInfo = ( originalNumber, currentNumber, originalMatrix ) => {
 
   var newMatrix = originalMatrix.map( arr => arr.slice() )                  
 
-
   newMatrix[originalPos[0]][originalPos[1]] = currentNumber
   newMatrix[currentPos[0]][currentPos[1]] = originalNumber
 
-  if( juegoMain.tieneSolucion(newMatrix)){
-    console.log("Tiene Solución");
-    //juegoMain.tablero = newMatrix  //Se cambia el tablero del juego
-    setDocumentTable(newMatrix, 'table_Puzzle')
-  }else{
-    console.log("NO Tiene Solución");
-    alert("No tiene solución, no se puede hacer ese cambio")
-    setDocumentTable(originalMatrix, 'table_Puzzle')
-  }
-
+  setDocumentTable(newMatrix, 'table_Puzzle')
+  // if( juegoMain.tieneSolucion(newMatrix)){
+  //   console.log("Tiene Solución");
+  //   //juegoMain.tablero = newMatrix  //Se cambia el tablero del juego
+  //   setDocumentTable(newMatrix, 'table_Puzzle')
+  // }else{
+  //   console.log("NO Tiene Solución");
+  //   alert("No tiene solución, no se puede hacer ese cambio")
+  //   setDocumentTable(originalMatrix, 'table_Puzzle')
+  // }
 }
 
 //Se encarga de cambiar el valor de la celda 
@@ -224,18 +223,26 @@ getMatrizDocument = (nombreTablaHTML) => {
 //Retorna la Solucion dependiendo del algoritmo seleccionado 
 const getSolution = () => {
 
-  if (selectedAlgorithm == "A*") {
+  juegoMain.tablero = getMatrizDocument('table_Puzzle')
 
-    console.log("Resolviendo con A*")  //Solo para probar que el juego funcione
-    juegoMain.tablero = getMatrizDocument('table_Puzzle')
-    return  juegoMain.algoritmoAEstrella()
+  if ( juegoMain.tieneSolucion(juegoMain.tablero) ) {
+
+    if (selectedAlgorithm == "A*") {
+      console.log("Resolviendo con A*")  //Solo para probar que el juego funcione
+      return  juegoMain.algoritmoAEstrella()
+      
+    }else{
+      console.log("Resolviendo con Bactracking")  //Solo para probar que el juego funcione
+      return juegoMain.algoritmoBacktracking()
+    }
     
   }else{
-
-    console.log("Resolviendo con Bactracking")  //Solo para probar que el juego funcione
-    juegoMain.tablero = getMatrizDocument('table_Puzzle')
-    return juegoMain.algoritmoBacktracking()
+    alert("Esta Matriz no se puede Solucionar")
+    return [juegoMain.tablero]
   }
+
+
+ 
 }
 
 
@@ -246,7 +253,6 @@ const nextStep = () => {
   //Bloquear la Matriz 
   // document.getElementById("table_Puzzle").classList.remove("enableTable") //
   // document.getElementById("table_Puzzle").classList.add("disableTable") //
-
   //alert("No puede editar la tabla mientras ejecuta el juego paso a paso ")
   
   if (!Array.isArray(solucionPasoAPaso)) {
@@ -275,23 +281,35 @@ sleep = (ms) => {
 
 //Recorre la matriz de solución paso a paso
 const showSolution = async (camino) => {
+  isStepByStep = true
   var runAgainButton = document.getElementById('run_Button')
-  
+  var changeAlgorithmBtn = document.getElementById('changeAlg_Button')
+  var nextStepBtn = document.getElementById('nextStep_Button')
+  var resetBtn = document.getElementById('reset_Button')
+  var changeWBlankbtn = document.getElementById('changeWBlank_Button')
+
   runAgainButton.setAttribute('disabled',true);
+  changeAlgorithmBtn.setAttribute('disabled',true);
+  nextStepBtn.setAttribute('disabled',true);
+  resetBtn.setAttribute('disabled',true);
+  changeWBlankbtn.setAttribute('disabled',true);
 
   while (camino.length != 0 ) {
     setDocumentTable(camino.shift().estado,'table_Puzzle' )
     await sleep(100);
   }
+  isStepByStep = false
+  
   runAgainButton.removeAttribute('disabled');
+  changeAlgorithmBtn.removeAttribute('disabled');
+  nextStepBtn.removeAttribute('disabled');
+  resetBtn.removeAttribute('disabled');
+  changeWBlankbtn.removeAttribute('disabled');
 }
 
 
-
-
 const runSolution = () => {
-  //revizar Primero si tiene solución antes de ejecutar el algoritmo
-  //Inclusive cada vez que se cambia
+
   solucionPasoAPaso = 0 //Si ejecuta el paso a paso y se cansa y le da ejecutar, tonses resetea solucionPAP para que no vuelva de donde lo dejó 
   showSolution(getSolution()) //Muestra la solucion paso a paso 
 
