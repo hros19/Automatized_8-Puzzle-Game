@@ -5,6 +5,8 @@ html {
 }
 
 body {
+    margin-left: 10px;
+    padding-left: 0%;
     display:list-item;
     height: auto;
     width: 100%;
