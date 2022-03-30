@@ -8,6 +8,7 @@ body {
     display:list-item;
     height: auto;
     width: 100%;
+    height: fit-content;
     background-image: linear-gradient(to right, #24243e, #141E30, #0f0c29);
     overflow: hidden;  
 }
