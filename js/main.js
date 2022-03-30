@@ -223,31 +223,23 @@ getMatrizDocument = (nombreTablaHTML) => {
 //Retorna la Solucion dependiendo del algoritmo seleccionado 
 const getSolution = () => {
 
-  juegoMain.tablero = getMatrizDocument('table_Puzzle')
 
-  if ( juegoMain.tieneSolucion(juegoMain.tablero) ) {
-
-    if (selectedAlgorithm == "A*") {
-      console.log("Resolviendo con A*")  //Solo para probar que el juego funcione
-      return  juegoMain.algoritmoAEstrella()
-      
-    }else{
-      console.log("Resolviendo con Bactracking")  //Solo para probar que el juego funcione
-      return juegoMain.algoritmoBacktracking()
-    }
+  if (selectedAlgorithm == "A*") {
+    console.log("Resolviendo con A*")  //Solo para probar que el juego funcione
+    return  juegoMain.algoritmoAEstrella()
     
   }else{
-    alert("Esta Matriz no se puede Solucionar")
-    return [juegoMain.tablero]
+    console.log("Resolviendo con Bactracking")  //Solo para probar que el juego funcione
+    return juegoMain.algoritmoBacktracking()
   }
-
-
- 
+    
 }
 
 
 //
 const nextStep = () => {
+
+  
   console.log("Siguiente paso");
   isStepByStep = true
   //Bloquear la Matriz 
@@ -256,11 +248,16 @@ const nextStep = () => {
   //alert("No puede editar la tabla mientras ejecuta el juego paso a paso ")
   
   if (!Array.isArray(solucionPasoAPaso)) {
-    solucionPasoAPaso = getSolution()
-    setDocumentTable(solucionPasoAPaso.shift().estado,'table_Puzzle' )  //Muestra el Siguiente paso en la interfaz
-    //Bloquear los botones de solución
-  }
+    juegoMain.tablero = getMatrizDocument('table_Puzzle')
 
+    if (juegoMain.esTableroValido()) {
+      solucionPasoAPaso = getSolution()
+      setDocumentTable(solucionPasoAPaso.shift().estado,'table_Puzzle' )  //Muestra el Siguiente paso en la interfaz
+      //Bloquear los botones de solución
+    }else{
+      alert("El tablero no tiene solución")
+    } 
+  }
   if (solucionPasoAPaso.length > 0) {
     setDocumentTable(solucionPasoAPaso.shift().estado,'table_Puzzle' )  //Muestra el Siguiente paso en la interfaz
   }else{
@@ -309,9 +306,15 @@ const showSolution = async (camino) => {
 
 
 const runSolution = () => {
+  juegoMain.tablero = getMatrizDocument('table_Puzzle')
 
-  solucionPasoAPaso = 0 //Si ejecuta el paso a paso y se cansa y le da ejecutar, tonses resetea solucionPAP para que no vuelva de donde lo dejó 
-  showSolution(getSolution()) //Muestra la solucion paso a paso 
+  if (juegoMain.esTableroValido()) {
+    solucionPasoAPaso = 0 //Si ejecuta el paso a paso y se cansa y le da ejecutar, tonses resetea solucionPAP para que no vuelva de donde lo dejó 
+    showSolution(getSolution()) //Muestra la solucion paso a paso 
+  } else {
+    alert("El tablero no tiene solución")
+  }
+ 
 
 }
 
@@ -351,14 +354,90 @@ const resetAll = () => {
   setDocumentTable(matrizEjercicio1, 'table_Puzzle');
 }
 
+
+const obtpiezaBlanca = (lista) => { 
+  
+  //Saber donde está el 0
+  for (let fila = 0; fila < lista.length; fila++) {
+    for(let columna = 0; columna < lista.length; columna++ ){
+      if (lista[fila][columna] == 0) {
+        return [fila, columna]
+      }
+    }
+  }
+}
+
+const obtenerPiezasMovibles = ( lista ) => {
+  // Buscamos las piezas que están alrededor de 0.
+  let posPzaBlanca = obtpiezaBlanca(lista)
+  let filaPzaB = posPzaBlanca[0]
+  let colPzaB = posPzaBlanca[1]
+  //Pieza blanca en el mero centro
+  if (filaPzaB == 1 && colPzaB == 1) {
+      return [lista[0][1], lista[1][0], lista[1][2], lista[2][1]]
+  }
+  //Pieza blanca esquinera
+  if (filaPzaB == 0 && colPzaB == 0) {
+      return [lista[0][1], lista[1][0]]
+  }
+  if (filaPzaB == 0 && colPzaB == 2) {
+      return [lista[0][1], lista[1][2]]
+  }
+  if (filaPzaB == 2 && colPzaB == 0) {
+      return [lista[2][1], lista[1][0]]
+  }
+  if (filaPzaB == 2 && colPzaB == 2) {
+      return [lista[2][1], lista[1][2]]
+  }
+  //Pieza blanca como arista
+  if (filaPzaB == 0 && colPzaB == 1) {
+      return [lista[0][0], lista[0][2], lista[1][1]]
+  }
+  if (filaPzaB == 1 && colPzaB == 0) {
+      return [lista[0][0], lista[2][0], lista[1][1]]
+  }
+  if (filaPzaB == 1 && colPzaB == 2) {
+      return [lista[0][2], lista[2][2], lista[1][1]]
+  }
+  if (filaPzaB == 2 && colPzaB == 1) {
+      return [lista[2][0], lista[2][2], lista[1][1]]
+  }
+  return ["ERROR INDEXADO obtenerPiezasMovibles()"]
+}
+
+const checkMov = (lista, movimiento) => {
+  var posiblesMovimientos = obtenerPiezasMovibles(lista)
+  for(let i = 0; i <posiblesMovimientos.length; i++){
+    
+    console.log(posiblesMovimientos[i]);
+    
+    if( posiblesMovimientos[i] == movimiento ){
+      return true
+    }
+  }
+  return false
+}
+
+
 const changeWBlanck = () => {
   
   const number = document.getElementById("changeWBlank_Input")
-  
 
   if( number.value != '' && parseInt(number.value) > 0 && parseInt(number.value) <= 8 ){
-    swapCellInfo( 0, parseInt(number.value), getMatrizDocument('table_Puzzle') )
-    solucionPasoAPaso = getSolution() //Carga la nueva solución en la lista 
+
+    //Ver la posicion del numero que queremos cambiar 
+    //Ver la posicion del 0 
+    //Si el numero esta cerca del 0 se cambia 
+
+    if(checkMov(getMatrizDocument('table_Puzzle'), number.value)){
+
+      swapCellInfo( 0, parseInt(number.value), getMatrizDocument('table_Puzzle') )
+      //juegoMain.tablero = getMatrizDocument('table_Puzzle')
+      solucionPasoAPaso = 0 //Carga la nueva solución en la lista 
+    }else{
+      alert("Solo puede mover las piezas cercanas al 0 ")
+    }
+
   }else{
     alert("Debe ingresar un número entre 1-8 en el input, para intercambiar con la pieza vacía")
   }
