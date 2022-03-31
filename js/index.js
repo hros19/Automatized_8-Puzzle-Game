@@ -1,53 +1,3 @@
-//const { Juego } = require('./Juego.js');
-/* 
-A* trabaja de forma similar que BFS con las sig diferencias
-  - en lugar de una cola, se una cola de prioridad
-    (En lugar de retornar el primer elemento que se agregó
-    retorna el elemento con un valor menor)
-  - para cada nuevo estado, se le asigna un valor definido como f(n) = g(n) + h(n)
-
-Siendo g(n) la funcion de coste real. Es el coste necesario para ir desde el inicio hasta el estado n.
-
-h(n) la funcion heuristica. Estima el costo para ir desde el estado (n) hasta el estado de solucion.
-
-
-*/
-
-// let estados = [];
-
-// estados.push([
-//     [1, 2, 3],
-//     [4, 5, 6],
-//     [7, 8, 0]
-// ]);
-// estados.push([
-//     [1, 2, 3],
-//     [4, 5, 6],
-//     [7, 0, 8]
-// ]);
-
-// let i = estados.length - 1;
-// while (i >= 0) {
-//     console.log(estados[i]);
-//     i--;
-// }
-
-
-// document.addEventListener("DOMContentLoaded", () => {
-//     generarTablero();
-
-//     function generarTablero() {
-//         const tablero = document.getElementById("tablero");
-//         for (let i = 0; i < 9; i++) {
-//             let espacio = document.createElement("div")
-//             espacio.classList.add("draggable")
-//             espacio.textContent = "x";
-//             espacio.setAttribute("id", i + 1)
-//             tablero.appendChild(espacio);
-//         }
-//     }
-// });
-
 
 //Matrices de prueba
 
@@ -92,15 +42,6 @@ swapCellInfo = ( originalNumber, currentNumber, originalMatrix ) => {
   newMatrix[currentPos[0]][currentPos[1]] = originalNumber
 
   setDocumentTable(newMatrix, 'table_Puzzle')
-  // if( juegoMain.tieneSolucion(newMatrix)){
-  //   console.log("Tiene Solución");
-  //   //juegoMain.tablero = newMatrix  //Se cambia el tablero del juego
-  //   setDocumentTable(newMatrix, 'table_Puzzle')
-  // }else{
-  //   console.log("NO Tiene Solución");
-  //   alert("No tiene solución, no se puede hacer ese cambio")
-  //   setDocumentTable(originalMatrix, 'table_Puzzle')
-  // }
 }
 
 //Se encarga de cambiar el valor de la celda 
@@ -120,8 +61,6 @@ setCellInfo = (input, originalMatrix) => {
   }else if( originalText != currentText ){
 
     swapCellInfo(parseInt(originalText), parseInt(currentText), originalMatrix)
-     //td.innerHTML = currentText
-     //console.log(originalText + " ahora es " + currentText);
     return
   }
 
@@ -131,7 +70,6 @@ setCellInfo = (input, originalMatrix) => {
 }
 
 //Función que agrega un input a la celda de la tabla, para editar su contenido 
-//
 setCellEditable = (htmlElement) => {
 
   if (!isStepByStep) {
@@ -179,18 +117,12 @@ setDocumentTable = (matrix, documentTable) => {
           var columnTable = document.createElement("td") //crea un elemento td
           var columnText = document.createTextNode(column)
 
-          // const columnText = document.createElement("input");
-          // columnText.setAttribute('type', "text");
-          // columnText.setAttribute('value', column);
-
-
           columnTable.appendChild(columnText) //Append del texto al td 
           columnTable.onclick = function(){ setCellEditable(this)} //EN FASE DE PRUEBA, acá agrega la función a cada celda
 
           if(column == 0){
             columnTable.setAttribute('class', 'blank_piece')
           }
-
           rowTable.appendChild(columnTable) //Apend del td al tr 
       });
       documentTable.appendChild(rowTable) // Append del rt al table
@@ -237,9 +169,7 @@ const getSolution = () => {
     }else{
       return solucionBack
     }
-    
-  }
-    
+  }    
 }
 
 
@@ -273,15 +203,10 @@ const nextStep = () => {
 
 }
 
-
-
 //Detiene la ejecución una cantidad de milisegundos 
 sleep = (ms) => {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-
-//Devuelve el Siguiente paso en la lista de elementos 
-
 
 //Recorre la matriz de solución paso a paso
 const showSolution = async (camino) => {
@@ -357,9 +282,6 @@ const resetAll = () => {
   console.log("Reiniciando Juego");
   isStepByStep = false
 
-  // document.getElementById("table_Puzzle").classList.remove("disableTable") //
-  // document.getElementById("table_Puzzle").classList.add("enableTable") //
-
   juegoMain = new Juego(matrizObjetivo)
   selectedAlgorithm = 'A*'   //'A*' ejecuta AEstrella  'Back' ejecuta Backtracking
   solucionPasoAPaso = 0
@@ -368,7 +290,6 @@ const resetAll = () => {
 
 
 const obtpiezaBlanca = (lista) => { 
-  
   //Saber donde está el 0
   for (let fila = 0; fila < lista.length; fila++) {
     for(let columna = 0; columna < lista.length; columna++ ){
@@ -437,10 +358,6 @@ const changeWBlanck = () => {
 
   if( number.value != '' && parseInt(number.value) > 0 && parseInt(number.value) <= 8 ){
 
-    //Ver la posicion del numero que queremos cambiar 
-    //Ver la posicion del 0 
-    //Si el numero esta cerca del 0 se cambia 
-
     if(checkMov(getMatrizDocument('table_Puzzle'), number.value)){
 
       swapCellInfo( 0, parseInt(number.value), getMatrizDocument('table_Puzzle') )
@@ -455,6 +372,5 @@ const changeWBlanck = () => {
   }
 
 }
-
 
 setDocumentTable(matrizEjercicio1, 'table_Puzzle');
