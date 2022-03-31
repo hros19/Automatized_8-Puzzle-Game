@@ -11,9 +11,16 @@ class Juego {
     constructor(tablero) {
         this.tablero = tablero;
         this.camino = [];
-        this.ultimoEstado = null;
+        this.contador = 0;
     }
 
+    /**
+     * Funcion que pregunta si una fila entra por parametro es igual a la primera fila del tablero
+     * del estado actual del juego.
+     * @param {Array} pFilaNueva Fila a comparar 
+     * @returns True, si la primera fila del tablero actual es exactamente igual
+     * a la fila que entra como parametro.
+     */
     primeraFilaIgual(pFilaNueva) {
         let filaActual = this.tablero[0];
         if (filaActual.length != pFilaNueva.length) {
@@ -28,6 +35,12 @@ class Juego {
         return true;
     }
 
+    /**
+     * Funcion para comparar dos matrices que entran por parametro.
+     * @param {Matriz} matriz1 Primera matriz a comparar.
+     * @param {Matriz} matriz2 Segunda matriz a comparar.
+     * @returns True, si ambas matrices son iguales.
+     */
     compararMatrices(matriz1, matriz2) {
         for(let i = 0; i < 3; i++) {
             for(let j = 0; j < 3; j++) {
@@ -39,6 +52,12 @@ class Juego {
         return true;
     }
 
+    /**
+     * Funcion que pregunta si un estado entra por parametro ya existe en la lista de estados.
+     * @param {Matriz} estado Un nuevo estado o matriz que entra por parametro y pregunta
+     * si es equivalente a alguno de los estados que existen actualmente en memoria. 
+     * @returns True, si el estado que entra por parametro ya existe en el camino del juego.
+     */
     existeEstado(estado) {
         for (let i in this.camino) {
             if (this.compararMatrices(this.camino[i].estado, estado)) {
@@ -48,6 +67,11 @@ class Juego {
         return false;
     }
 
+    /**
+     * Funcion que convierte una matriz 3x3 en una fila de 9 elementos.
+     * @param {Matriz} mat Matriz a convertir en fila 
+     * @returns La matriz convertida en fila.
+     */ 
     deMatrizAFila(mat) {
         let fila = [];
         for (let i in mat) {
@@ -58,7 +82,11 @@ class Juego {
         return fila;
     }
 
-    
+    /**
+     * Funcion para preguntar si el estado que entra por parametro tiene alguna solucion.
+     * @param {Matriz} estado Estado que entra por parametro. 
+     * @returns True si el estado tiene solucion. False, caso contrario.
+     */
     tieneSolucion(estado) {
         const fila = this.deMatrizAFila(estado);
         let cont = 0;
@@ -72,6 +100,12 @@ class Juego {
         return cont % 2 == 0;
     }
 
+    /**
+     * Funcion que pregunta si el tablero actual es valido.
+     * @returns True, si el estado actual del juego se considera un estado valido.
+     * Teniendo como estado valido a una matriz que tiene los elementos con los valores
+     * del 0-8 (Inclusivo) y sin repeticion de ningun elemento.]
+     */
     esTableroValido() {
         let res = [0,1,2,3,4,5,6,7,8];
         for (let i = 0; i < 3; i++) {
@@ -86,6 +120,10 @@ class Juego {
         return res.length == 0;
     }
 
+    /**
+     * Implementacion del Backtracking para encontrar una solucion al juego.
+     * @returns El camino del juego con el que dio con la solucion.
+     */
     algoritmoAEstrella() {
         this.camino = [];
         let listaEstados = new ColaPrioridad();                          
@@ -93,9 +131,7 @@ class Juego {
         n.peso = n.calcularManhattan();
         this.camino.push(n);
         let raiz = n;
-        let cont = 0;
         do {
-            cont++;
             let hijos = n.obtenerHijos();
             for (let i in hijos) {
                 if (!this.tieneSolucion(hijos[i].estado)) {
@@ -105,7 +141,6 @@ class Juego {
                 if (hijos[i].esSolucion()) {
                     hijos[i].peso = hijos[i].calcularManhattan() + this.camino.length + 1
                     this.camino.push(hijos[i]);
-                    console.log(">>>>>>>>> ", cont);
                     return this.camino;
                 }
                 if (!this.existeEstado(hijos[i].estado) && 
@@ -128,20 +163,23 @@ class Juego {
         } while (true);
     }
 
+    /**
+     * Implementacion del algoritmo backtracking para dar con la solucion del juego. Teniendo como restriccion una
+     * cierta cantidad de repeticiones ya que puede crashear el programa.
+     * @returns El camino del juego con el que dio con la solucion.
+     */
     algoritmoBacktracking() {
+        this.contador = 0;
         this.camino = [];
         let estadosActuales = [];
         let nodo = new Nodo(this.tablero, 0);
         this.camino.push(nodo);
-        let raiz = nodo;
-        let cont = 0;
         do {
-            cont++;
+            this.contador++;
             let hijos = nodo.obtenerHijos();
             for (let i in hijos) {
                 if (hijos[i].esSolucion()) {
                     this.camino.push(hijos[i]);
-                    console.log("B", cont);
                     return this.camino;
                 }
                 if (!this.existeEstado(hijos[i].estado)) {
@@ -191,45 +229,3 @@ let juego4 = new Juego([
     [4, 5, 6],
     [7, 8, 0]
 ]);
-
-/*
-function imp(mat) {
-    for(let i in mat) {
-        mat[i].mostrar();
-    }
-    console.log("------------------------");
-}*/
-
-//console.log(juego4.esTableroValido());
-
-/*
-if (juego1.tieneSolucion(juego1.tablero)) {
-    imp(juego1.algoritmoAEstrella());
-} else {
-    console.log("\n~~~~ \njuego 1 sin solucion\n~~~~")
-}*/
-
-/*
-if (juego2.tieneSolucion(juego2.tablero)) {
-    imp(juego2.algoritmoAEstrella());
-} else {
-    console.log("\n~~~~ \njuego 2 sin solucion\n~~~~")
-}//
-
-if (juegoB.tieneSolucion(juegoB.tablero)) {
-    console.log("p");
-    imp(juegoB.algoritmoBacktracking());
-} else {
-    console.log("\n~~~~ \njuego B sin solucion\n~~~~")
-}
-*/
-
-
-/*
-
-if (juego4.tieneSolucion(juego4.tablero)) {
-    imp(juego4.algoritmoBacktracking());
-} else {
-    console.log("\n~~~~ \njuego 4 sin solucion\n~~~~")
-}
-//*/
