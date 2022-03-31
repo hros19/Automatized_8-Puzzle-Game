@@ -176,6 +176,9 @@ class Juego {
         this.camino.push(nodo);
         do {
             this.contador++;
+            if(this.contador > 1000){
+                return "Es posible que se halla hecho un loop"
+            }
             let hijos = nodo.obtenerHijos();
             for (let i in hijos) {
                 if (hijos[i].esSolucion()) {

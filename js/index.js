@@ -230,7 +230,14 @@ const getSolution = () => {
     
   }else{
     console.log("Resolviendo con Bactracking")  //Solo para probar que el juego funcione
-    return juegoMain.algoritmoBacktracking()
+    solucionBack = juegoMain.algoritmoBacktracking()
+    if (solucionBack != []) {
+      alert("Es posible que el algoritmo no pueda resolver esta matriz")
+      return false
+    }else{
+      return solucionBack
+    }
+    
   }
     
 }
@@ -310,7 +317,12 @@ const runSolution = () => {
 
   if (juegoMain.esTableroValido()) {
     solucionPasoAPaso = 0 //Si ejecuta el paso a paso y se cansa y le da ejecutar, tonses resetea solucionPAP para que no vuelva de donde lo dejó 
-    showSolution(getSolution()) //Muestra la solucion paso a paso 
+    if(!getSolution()){
+      console.log("No se pudo dar solución con backtracking");
+    }else{
+      showSolution(getSolution()) //Muestra la solucion paso a paso 
+    }
+    
   } else {
     alert("El tablero no tiene solución")
   }
