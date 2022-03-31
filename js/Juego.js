@@ -176,8 +176,8 @@ class Juego {
         this.camino.push(nodo);
         do {
             this.contador++;
-            if(this.contador > 1000){
-                return "Es posible que se halla hecho un loop"
+            if(this.contador > 10000){
+                return "Demasiadas recursiones"
             }
             let hijos = nodo.obtenerHijos();
             for (let i in hijos) {
