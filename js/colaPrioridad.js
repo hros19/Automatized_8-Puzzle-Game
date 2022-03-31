@@ -193,7 +193,7 @@ class Nodo {
         return hijos;
     }
   
-    // Borrar, no es necesario en produccion
+    // Funcion que imprimir el estado actual de una forma agradable en forma de tablero.
     mostrar() {
         let msg = "";
         for (let i in this.estado) {
@@ -316,9 +316,3 @@ class Nodo {
         return this.elementos.pop();
     }
 }
-
-
-//let n = new Nodo([[1,2,3],[4,5,6],[7,8,0]], 2);
-//module.exports = { Nodo, ColaPrioridad };
-
-
