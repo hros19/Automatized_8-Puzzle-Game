@@ -101,6 +101,52 @@ class Juego {
     }
 
     /**
+     * @returns Retorna todos los movimientos hechos en un String.
+     */
+    obtenerMovimientos() {
+        let msg = "";
+        for (let i = 0; i < this.camino.length - 1; i++) {
+            let nodoActual = this.camino[i];
+            let posBlancaActual = nodoActual.obtenerPosPiezaBlanca();
+            //console.log(nodoActual.estado);
+            //console.log(nodoActual.obtenerPosPiezaBlanca());
+
+            let nodoSiguiente = this.camino[i+1];
+            let posBlancaSig = nodoSiguiente.obtenerPosPiezaBlanca();
+            //console.log(nodoSiguiente.estado);
+            //console.log(nodoSiguiente.obtenerPosPiezaBlanca());
+
+            // Si hubo regreso
+            if (posBlancaActual[0] != posBlancaSig[0] && posBlancaActual[1] != posBlancaSig[1]) {
+                msg += "~";
+            }
+            // Movimientos horizontales
+            // Movimiento derecho
+            if (posBlancaActual[0] == posBlancaSig[0] && posBlancaActual[1] < posBlancaSig[1]) {
+                let valorMovido = nodoActual.estado[posBlancaSig[0]][posBlancaSig[1]]
+                msg += "(r; " + valorMovido + ")";
+            }
+            // Movimiento izquierdo
+            if (posBlancaActual[0] == posBlancaSig[0] && posBlancaActual[1] > posBlancaSig[1]) {
+                let valorMovido = nodoActual.estado[posBlancaSig[0]][posBlancaSig[1]]
+                msg += "(l; " + valorMovido + ")";
+            }
+
+            // Movimientos verticales
+            // Movimiento arriba
+            if (posBlancaActual[1] == posBlancaSig[1] && posBlancaActual[0] < posBlancaSig[0]) {
+                let valorMovido = nodoActual.estado[posBlancaSig[0]][posBlancaSig[1]]
+                msg += "(u; " + valorMovido + ")";
+            }
+            if (posBlancaActual[1] == posBlancaSig[1] && posBlancaActual[0] > posBlancaSig[0]) {
+                let valorMovido = nodoActual.estado[posBlancaSig[0]][posBlancaSig[1]]
+                msg += "(d; " + valorMovido + ")";
+            }
+        }
+        return msg;
+    }
+
+    /**
      * Funcion que pregunta si el tablero actual es valido.
      * @returns True, si el estado actual del juego se considera un estado valido.
      * Teniendo como estado valido a una matriz que tiene los elementos con los valores
@@ -215,10 +261,13 @@ let juego2 = new Juego([
 ]);
 
 let juegoB = new Juego([
-    [1, 8, 2],
-    [0, 4, 3],
-    [7, 6, 5]
+    [2, 1, 3],
+    [4, 5, 6],
+    [8, 7, 0]
 ]);
+
+juegoB.algoritmoAEstrella();
+console.log(juegoB.obtenerMovimientos())
 
 // sin solucion
 let juego3 = new Juego([
