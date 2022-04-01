@@ -12,15 +12,56 @@ matrizEjercicio1 = [
   [8, 7, 0]
 ]
 
+matrizBackup = matrizEjercicio1;
+
 let juegoMain = new Juego(matrizObjetivo)
 var selectedAlgorithm = 'A*'   //'A*' ejecuta AEstrella  'Back' ejecuta Backtracking
 var solucionPasoAPaso = 0
 var isStepByStep = false
 
+shuffle = () => {
+    do {
+        juegoMain.tablero = obtenerMatrizRandom();
+        matrizEjercicio1 = juegoMain.tablero;
+    } while (!juegoMain.esTableroValido() || !juegoMain.tieneSolucion(juegoMain.tablero))
 
+    setDocumentTable(matrizEjercicio1, 'table_Puzzle');
+}
+
+/**
+ * Function that returns a random value in a range (inclusive)
+ * @param min Minimum value
+ * @param max Maximum value
+ * @return Value between min and max (including both values).
+ */
+function generateRandomIntegerInRange(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+/**
+ * @return Una matriz completamente random con valores unicos de 0 a 8.
+ */
+obtenerMatrizRandom = () => {
+    let valores = [];
+    let res = [[0,0,0],[0,0,0],[0,0,0]];
+    for (let i in res) {
+        for (let j in res[i]) {
+            let entro = false;
+            let num;
+            do {
+                num = generateRandomIntegerInRange(0, 8);
+                entro = (valores.indexOf(num) == -1)
+                valores.push(num)
+            } while (!entro)
+            valores.push(num)
+            res[i][j] = num; 
+        }
+    }
+    return res;
+}
 
 //Devuelve la fila y la columna de un elemento en la matriz
-getRowColumn = (matrix, search) =>{
+getRowColumn = (matrix, search) => {
   const row = matrix.findIndex(row => row.includes(search))
   const col = matrix[row].indexOf(search)
   return [row,col]
@@ -56,10 +97,6 @@ setCellInfo = (input, originalMatrix) => {
   else if( parseInt(currentText) > 8 || parseInt(currentText) < 0 ) {
     alert('Debe ingresar un número entre 0-8')
   } 
-  //else if (!currentText in ["1","2","3","4","5","6","7","8","0"]) {
-      //alert('No puede ingresar un número fuera de la matriz')
-      //return
-  //}
   else if( originalText != currentText ) {
     swapCellInfo(parseInt(originalText), parseInt(currentText), originalMatrix)
     return
@@ -125,10 +162,8 @@ setDocumentTable = (matrix, documentTable) => {
   });
 }
 
-
 // Función para tomar la info de la matriz del html y convertila en una lista
 // para iniciar el juego 
-
 getMatrizDocument = (nombreTablaHTML) => {
   var tableObj = document.getElementById( nombreTablaHTML );
   var arr = [];
@@ -144,7 +179,6 @@ getMatrizDocument = (nombreTablaHTML) => {
   }
   return(arr)
 }
-
 
 //Retorna la Solucion dependiendo del algoritmo seleccionado 
 const getSolution = () => {
@@ -165,8 +199,7 @@ const getSolution = () => {
   }    
 }
 
-
-//
+// Go thorugh next step on the algorithm
 const nextStep = () => {
   console.log("Siguiente paso");
   isStepByStep = true
@@ -221,7 +254,12 @@ const showSolution = async (camino) => {
   changeWBlankbtn.removeAttribute('disabled');
 }
 
+// Give the alert with the path to the user.
+const alertSolution = () => {
+    alert(juegoMain.obtenerMovimientos());
+}
 
+// Go ahead with the animation following the path with the answer.
 const runSolution = () => {
   juegoMain.tablero = getMatrizDocument('table_Puzzle')
 
@@ -231,7 +269,9 @@ const runSolution = () => {
       console.log("No se pudo dar solución con backtracking");
     }
     else {
-      showSolution(getSolution()) //Muestra la solucion paso a paso 
+        let res = getSolution()
+        alertSolution() //Muestra la solucion en un alert 
+      showSolution(res) //Muestra la solucion paso a paso
     } 
   }
   else {
@@ -239,7 +279,7 @@ const runSolution = () => {
   }
 }
 
-
+// switch algorithm
 const changeAlgorithm = () => {
   var tableroHTML = document.getElementById( 'tablero' )
   var algNameHTML = document.getElementById('alg_Name')
@@ -264,9 +304,8 @@ const resetAll = () => {
   juegoMain = new Juego(matrizObjetivo)
   selectedAlgorithm = 'A*'   //'A*' ejecuta AEstrella  'Back' ejecuta Backtracking
   solucionPasoAPaso = 0
-  setDocumentTable(matrizEjercicio1, 'table_Puzzle');
+  setDocumentTable(matrizBackup, 'table_Puzzle');
 }
-
 
 const obtpiezaBlanca = (lista) => { 
   //Saber donde está el 0
@@ -328,7 +367,7 @@ const checkMov = (lista, movimiento) => {
   return false
 }
 
-
+// Manual change of piece.
 const changeWBlanck = () => {
   const number = document.getElementById("changeWBlank_Input")
   if ( number.value != '' && parseInt(number.value) > 0 && parseInt(number.value) <= 8 ) {
