@@ -316,3 +316,5 @@ class Nodo {
         return this.elementos.pop();
     }
 }
+
+//module.exports = { Nodo, ColaPrioridad };
