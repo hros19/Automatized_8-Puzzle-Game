@@ -108,13 +108,9 @@ class Juego {
         for (let i = 0; i < this.camino.length - 1; i++) {
             let nodoActual = this.camino[i];
             let posBlancaActual = nodoActual.obtenerPosPiezaBlanca();
-            //console.log(nodoActual.estado);
-            //console.log(nodoActual.obtenerPosPiezaBlanca());
 
             let nodoSiguiente = this.camino[i+1];
             let posBlancaSig = nodoSiguiente.obtenerPosPiezaBlanca();
-            //console.log(nodoSiguiente.estado);
-            //console.log(nodoSiguiente.obtenerPosPiezaBlanca());
 
             // Si hubo regreso
             if (posBlancaActual[0] != posBlancaSig[0] && posBlancaActual[1] != posBlancaSig[1]) {
@@ -246,38 +242,3 @@ class Juego {
     }
 }
 
-// tiene solucion
-let juego1 = new Juego([
-    [1, 2, 3],
-    [0, 4, 6],
-    [7, 5, 8]
-]);
-
-// tiene solucion
-let juego2 = new Juego([
-    [1, 8, 2],
-    [0, 4, 3],
-    [7, 6, 5]
-]);
-
-let juegoB = new Juego([
-    [2, 1, 3],
-    [4, 5, 6],
-    [8, 7, 0]
-]);
-
-juegoB.algoritmoAEstrella();
-console.log(juegoB.obtenerMovimientos())
-
-// sin solucion
-let juego3 = new Juego([
-    [8, 1, 2],
-    [0, 4, 3],
-    [7, 6, 5]
-]);
-
-let juego4 = new Juego([
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 0]
-]);
